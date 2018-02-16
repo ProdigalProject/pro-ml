@@ -1,9 +1,10 @@
 import pytest
 
-@pytest.fixture 
+
+@pytest.fixture
 def dataTest():
     from .. import Data
-    return Data.Data() 
+    return Data.Data()
 
 
 def test_get_data(dataTest):
@@ -12,12 +13,12 @@ def test_get_data(dataTest):
             "Apple_Price_History":
             [
                 {
-                       'timestamp': "2018-04-14T00:00:00",  
-                       'open': "1",  
-                       'high': "1",  
-                       'low': "1",  
-                       'close': "1",  
-                       'volume': "1",  
+                       'timestamp': "2018-04-14T00:00:00",
+                       'open': "1",
+                       'high': "1",
+                       'low': "1",
+                       'close': "1",
+                       'volume': "1",
                 }
             ],
         },
