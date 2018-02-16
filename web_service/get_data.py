@@ -24,7 +24,7 @@ class Data:
              print(error.info())
              print(json.loads(error.read().decode("utf8", 'ignore')))
 
-    def main():
+def main():
         data = {
             "Inputs": {
                 "Apple_Price_History":
@@ -44,8 +44,7 @@ class Data:
             }
         }
         d = Data()
-        result = d.get_data(data)
-        print(result)
+        d.get_data(data)
 
-        if __name__ == "__main__":
-            main()
+if __name__ == "__main__":
+        main()
