@@ -39,7 +39,9 @@ class MineStockPrices:
             Default return format is JSON.
             search_term: ticker symbol to search for stock prices
         '''
-        return self.get_response_from_api("TIME_SERIES_INTRADAY", search_term, interval)
+        return self.get_response_from_api("TIME_SERIES_INTRADAY",
+                                          search_term,
+                                          interval)
 
     def get_daily_stocks(self, search_term):
         '''
@@ -85,7 +87,7 @@ def main():
     m = MineStockPrices()
     result = m.get_intraday_stocks("MSFT")
 
-    weekly = m.get_weekly_stocks("MSFT") 
+    weekly = m.get_weekly_stocks("MSFT")
     print(weekly)
 
 if __name__ == "__main__":
