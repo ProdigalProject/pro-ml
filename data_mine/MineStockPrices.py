@@ -59,7 +59,7 @@ class MineStockPrices:
         '''
         return self.get_response_from_api("TIME_SERIES_WEEKLY", search_term)
 
-    def get_monthly_stocks(self):
+    def get_monthly_stocks(self, search_term):
         '''
             Get stock prices of a company monthly.
             Default number of entries returned is latest 100 data points.
