@@ -21,15 +21,14 @@ class get_data:
             "GlobalParameters":  {
             }
         }
-        body = str.encode(json.dumps(data))
-        print(body)
-        get_data(body)
+        get_data(data)
 
     def get_data(input):
+        body = str.encode(json.dumps(input))
         url = 'https://ussouthcentral.services.azureml.net/workspaces/5c0fb2c3710c46348125a99f6dd0e1df/services/e20bef5fd25447658e67952606835a4c/execute?api-version=2.0&format=swagger'
         api_key = 'e7MiObHOMV+CJ9/I1lahT8HighwH4jDbmhcc30SgePzhkVl4WEEQ/nCpSqNCCZ2K8YIefHKiCQbzpdVCBHlqhA=='
         headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
-        req = urllib.request.Request(url, input, headers)
+        req = urllib.request.Request(url, body, headers)
 
         try:
             response = urllib.request.urlopen(req)
