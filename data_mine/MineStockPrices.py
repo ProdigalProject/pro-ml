@@ -18,7 +18,7 @@ class MineStockPrices:
         self._api_key = "NFBPXFB58FY9UAY0"
         self._base_url = "https://www.alphavantage.co/query"
 
-    def get_response_from_api(self, function, search_term):
+    def get_response_from_api(self, function, search_term, interval=None):
         '''
             Helper method to return json objects of ticker symbol from API
             function: table/database name defined by alphavantage.co
@@ -27,17 +27,19 @@ class MineStockPrices:
         payload = {}
         payload["function"] = function
         payload["symbol"] = search_term
+        payload["apikey"] = self._api_key
+        payload["interval"] = interval
         response = requests.get(self._base_url, params=payload)
         return response.text
 
-    def get_intraday_stocks(self, search_term):
+    def get_intraday_stocks(self, search_term, interval="15min"):
         '''
             Get stock prices of a paricular company within one day.
             Default time interval between each API pull is 15 minutes.
             Default return format is JSON.
             search_term: ticker symbol to search for stock prices
         '''
-        return get_response_from_api("TIME_SERIES_INTRADAY", search_term)
+        return self.get_response_from_api("TIME_SERIES_INTRADAY", search_term, interval)
 
     def get_daily_stocks(self, search_term):
         '''
@@ -46,7 +48,7 @@ class MineStockPrices:
             Default return format is JSON.
             search_term: ticker symbol to search for stock prices
         '''
-        return get_response_from_api("TIME_SERIES_DAILY", search_term)
+        return self.get_response_from_api("TIME_SERIES_DAILY", search_term)
 
     def get_weekly_stocks(self, search_term):
         '''
@@ -55,7 +57,7 @@ class MineStockPrices:
             Default return format is JSON.
             search_term: ticker symbol to search for stock prices
         '''
-        return get_response_from_api("TIME_SERIES_WEEKLY", search_term)
+        return self.get_response_from_api("TIME_SERIES_WEEKLY", search_term)
 
     def get_monthly_stocks(self):
         '''
@@ -64,7 +66,7 @@ class MineStockPrices:
             Default return format is JSON.
             search_term: ticker symbol to search for stock prices
         '''
-        return get_response_from_api("TIME_SERIES_MONTHLY", search_term)
+        return self.get_response_from_api("TIME_SERIES_MONTHLY", search_term)
 
     def get_intraday_cryptos(self):
         pass
@@ -81,8 +83,10 @@ class MineStockPrices:
 
 def main():
     m = MineStockPrices()
-    result = m.get_intraday_stocks("AAPL", "15min")
-    print(result)
+    result = m.get_intraday_stocks("MSFT")
+
+    weekly = m.get_weekly_stocks("MSFT") 
+    print(weekly)
 
 if __name__ == "__main__":
     main()
