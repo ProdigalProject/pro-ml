@@ -1,9 +1,9 @@
 import pytest
 
 @pytest.fixture 
-def mineStock():
-    from .. import MineStockPrices
-    return MineStockPrices.MineStockPrices() 
+def dataTest():
+    from .. import dataTests
+    pass
 
 def test_get_data
     pass
