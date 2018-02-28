@@ -25,12 +25,16 @@ SECRET_KEY = '+tvl7fovy=2&l433%vhpp4jenht==w4-7mkpuv=sl4+ob1rd*5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '18.217.102.60',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'stocks.apps.StocksConfig',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
