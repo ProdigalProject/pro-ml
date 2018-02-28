@@ -1,4 +1,6 @@
 import requests
+import time
+from ExtractTickers import ExtractTickers
 
 
 class MineStockPrices:
@@ -15,10 +17,11 @@ class MineStockPrices:
             _api_key: API token for alphavantage.co
             _base_url: Base URL to call alaphavantage API
         '''
+        self._etc = ExtractTickers() 
         self._api_key = "NFBPXFB58FY9UAY0"
         self._base_url = "https://www.alphavantage.co/query"
 
-    def get_response_from_api(self, function, search_term, interval=None):
+    def get_response_from_api(self, function, search_term, datatype="json", interval=None):
         '''
             Helper method to return json objects of ticker symbol from API
             function: table/database name defined by alphavantage.co
@@ -29,6 +32,7 @@ class MineStockPrices:
         payload["symbol"] = search_term
         payload["apikey"] = self._api_key
         payload["interval"] = interval
+        payload["datatype"] = datatype
         response = requests.get(self._base_url, params=payload)
         return response.text
 
@@ -52,14 +56,14 @@ class MineStockPrices:
         '''
         return self.get_response_from_api("TIME_SERIES_DAILY", search_term)
 
-    def get_weekly_stocks(self, search_term):
+    def get_weekly_stocks(self, search_term, datatype):
         '''
             Get stock prices of a company weekly.
             Default number of entries returned is latest 100 data points.
             Default return format is JSON.
             search_term: ticker symbol to search for stock prices
         '''
-        return self.get_response_from_api("TIME_SERIES_WEEKLY", search_term)
+        return self.get_response_from_api("TIME_SERIES_WEEKLY", search_term, datatype)
 
     def get_monthly_stocks(self, search_term):
         '''
@@ -82,13 +86,26 @@ class MineStockPrices:
     def get_monthly_cryptos(self):
         pass
 
+    def write_each_ticker_to_file(self): 
+        tickers = self._etc.get_tickers()
+        for tick in range(0, 20): 
+            csv_path = "data/csv/" + tickers[tick]
+            csv_file = open(csv_path, "w") 
+            weekly_csv = self.get_weekly_stocks(tickers[tick], "csv")
+            csv_file.write(weekly_csv) 
+            csv_file.close()
+
+            json_path = "data/json/" + tickers[tick]
+            json_file = open(json_path, "w") 
+            weekly_json = self.get_weekly_stocks(tickers[tick], "json") 
+            json_file.write(weekly_json)
+            json_file.close()
+
 
 def main():
     m = MineStockPrices()
-    result = m.get_intraday_stocks("MSFT")
-
-    weekly = m.get_weekly_stocks("MSFT")
-    print(weekly)
+    m.write_each_ticker_to_file() 
+    
 
 if __name__ == "__main__":
     main()
