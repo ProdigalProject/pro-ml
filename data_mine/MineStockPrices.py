@@ -1,4 +1,5 @@
 import requests
+import time
 from ExtractTickers import ExtractTickers
 
 
@@ -87,16 +88,16 @@ class MineStockPrices:
 
     def write_each_ticker_to_file(self): 
         tickers = self._etc.get_tickers()
-        for tick in tickers: 
-            csv_path = "data/csv/" + tick
+        for tick in range(0, 20): 
+            csv_path = "data/csv/" + tickers[tick]
             csv_file = open(csv_path, "w") 
-            weekly_csv = self.get_weekly_stocks(tick, "csv")
+            weekly_csv = self.get_weekly_stocks(tickers[tick], "csv")
             csv_file.write(weekly_csv) 
             csv_file.close()
 
-            json_path = "data/json/" + tick
+            json_path = "data/json/" + tickers[tick]
             json_file = open(json_path, "w") 
-            weekly_json = self.get_weekly_stocks(tick, "json") 
+            weekly_json = self.get_weekly_stocks(tickers[tick], "json") 
             json_file.write(weekly_json)
             json_file.close()
 
