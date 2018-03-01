@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '18.217.102.60',
+    'prodigal-ml.us-east-2.elasticbeanstalk.com',
 ]
 
 
