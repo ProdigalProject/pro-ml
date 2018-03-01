@@ -1,5 +1,5 @@
 import requests 
 
-r = requests.get("http://18.217.102.60:8000/stocks") 
+r = requests.get("http://prodigal-ml.us-east-2.elasticbeanstalk.com/stocks/1/?format=json") 
 print(r.text)
 print(r.json())
