@@ -1,4 +1,4 @@
 Unit_Test:
   script:
-    - python3 -m pytest -s -v /home/gitlab-runner/builds/b74f8bb5/0/prodigal/pro-ml/data_mine
+    - pytest -s -v /home/gitlab-runner/builds/b74f8bb5/0/prodigal/pro-ml/data_mine
   stage: test
