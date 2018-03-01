@@ -1,4 +1,4 @@
 Unit_Test:
   script:
-    - python3 /home/gitlab-runner/builds/b74f8bb5/0/prodigal/pro-ml/data_mine/tests/test_MineStockPrices.py
+    - python3 -m pytest /home/gitlab-runner/builds/b74f8bb5/0/prodigal/pro-ml/data_mine/tests/test_MineStockPrices.py
   stage: test
