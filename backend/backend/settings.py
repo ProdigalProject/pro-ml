@@ -84,8 +84,8 @@ DATABASES = {
         'NAME': 'helloworld',
         'USER': 'prodigal',
         'PASSWORD': 'DarkoMarinov1',
-        'HOST': 'prodigal-mysql-db.cwrjwojncyjz.us-east-2.rds.amazonaws.com', 
-        'PORT': '3306', 
+        'HOST': 'prodigal-mysql-db.cwrjwojncyjz.us-east-2.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
@@ -127,10 +127,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = './static/'
+STATIC_ROOT = ''
 
-STATICFILES_DIRS = ( 
-    os.path.join(BASE_DIR, 'static'), 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
     './static',
-    #'/var/www/backend/static/'
 )

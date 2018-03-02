@@ -1,9 +1,13 @@
+before_script: 
+    - export PATH=$PATH:/usr/local/bin:/home/gitlab-runner/python/bin
+    - pip3 install pytest Django==2.0.2 djangorestframework mysqlclient
+
 stages: 
     - build
     - test
     - deploy
 
-job1.0: 
+job_test1: 
     stage: test
     only: 
         - master
@@ -11,3 +15,26 @@ job1.0:
         - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/data_mine
         - python -m pytest -s -v tests/
 
+job_test2: 
+    stage: test
+    only: 
+        - master
+    script: 
+        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/web_service
+        - python3 -m pytest -s -v
+
+job_test3: 
+    stage: test
+    only: 
+        - master
+    script: 
+        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/backend
+        - python3 manage.py test
+
+job_deploy: 
+    stage: deploy
+    only: 
+        - master
+    script:
+        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/backend
+        - eb deploy
