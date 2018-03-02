@@ -1,6 +1,3 @@
-before_script: 
-    - pdg && atv
-
-rspec:
-    script:
-        - pytest -s -v
+job1: 
+  script: 
+    - echo "HELLO WORLD"
