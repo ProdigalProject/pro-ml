@@ -10,7 +10,7 @@ stages:
 job_test1: 
     stage: test
     only: 
-        - hk_iteration3
+        - master
     script:
         - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/data_mine
         - python -m pytest -s -v tests/
@@ -18,7 +18,7 @@ job_test1:
 job_test2: 
     stage: test
     only: 
-        - hk_iteration3
+        - master
     script: 
         - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/web_service
         - python3 -m pytest -s -v
@@ -26,7 +26,7 @@ job_test2:
 job_test3: 
     stage: test
     only: 
-        - hk_iteration3
+        - master
     script: 
         - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/backend
         - python3 manage.py test
@@ -34,7 +34,7 @@ job_test3:
 job_deploy: 
     stage: deploy
     only: 
-        - hk_iteration3
+        - master
     script:
         - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/backend
         - eb deploy
