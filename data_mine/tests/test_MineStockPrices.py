@@ -23,7 +23,7 @@ def test_get_daily_stocks(mineStock):
 
 
 def test_get_weekly_stocks(mineStock):
-    r = mineStock.get_weekly_stocks("MSFT")
+    r = mineStock.get_weekly_stocks("MSFT", "json")
     assert(r is not None)
 
 

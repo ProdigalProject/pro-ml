@@ -104,7 +104,7 @@ class MineStockPrices:
 
 def main():
     m = MineStockPrices()
-    m.write_each_ticker_to_file() 
+    # m.write_each_ticker_to_file() 
     
 
 if __name__ == "__main__":

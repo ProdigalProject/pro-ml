@@ -1,6 +1,6 @@
 stages: 
     - build
-    - test
+    - test_datamine
 
 build: 
     only: 
@@ -8,10 +8,10 @@ build:
     script:
         - echo "Now is building." 
 
-test: 
+test_datamine: 
     only: 
         - hk_iteration3
     script: 
         - cd /home/ec2-user/workspace/pro-ml
         - source env/bin/activate
-        - pytest -s -v 
+        - python -m pytest -s -v tests/
