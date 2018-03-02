@@ -1,5 +1,6 @@
-Unit_Test:
-  script:
-    - cd /home/gitlab-runner/builds/b74f8bb5/0/prodigal/pro-ml/data_mine
-    - pytest -s -v
-  stage: test
+before_script: 
+    - pdg && atv
+
+rspec:
+    script:
+        - pytest -s -v
