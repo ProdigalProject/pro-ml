@@ -15,6 +15,7 @@ job2:
     only: 
         - hk_iteration3
     script: 
+        - sudo su -
         - cd /home/ec2-user/workspace/pro-ml
         - source env/bin/activate
         - python -m pytest -s -v tests/
