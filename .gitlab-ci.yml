@@ -4,9 +4,8 @@ stages:
     - deploy
 
 job1.0: 
-    stage: build
+    stage: test
     only: 
         - hk_iteration3
     script:
-        - cd /home/gitlab-runner/builds/d82fbb85/0/prodigal/pro-ml/data_mine
-        - python -m pytest -s -v tests/
+        - echo "HELLO"
