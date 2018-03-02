@@ -1,4 +1,0 @@
-[fetch]
-	recurseSubmodules = false
-[http "https://gitlab.engr.illinois.edu"]
-	sslCAInfo = /home/ec2-user/workspace/pro-ml/builds/a410c870/0/prodigal/pro-ml.tmp/CI_SERVER_TLS_CA_FILE
