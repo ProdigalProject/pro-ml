@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'igqxgrcy5dw9rxc2', 
-        'USER': 'gqk0vs5rc6nfbj0w', 
-        'PASSWORD': 'ib45oys91og5m4q5', 
-        'HOST': 'zwgaqwfn759tj79r.chr7pe7iynqr.eu-west-1.rds.amazonaws.com', 
+        'NAME': 'helloworld',
+        'USER': 'prodigal',
+        'PASSWORD': 'DarkoMarinov1',
+        'HOST': 'prodigal-mysql-db.cwrjwojncyjz.us-east-2.rds.amazonaws.com', 
         'PORT': '3306', 
     }
 }
