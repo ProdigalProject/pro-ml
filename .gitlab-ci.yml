@@ -16,8 +16,5 @@ job2:
     only: 
         - hk_iteration3
     script:
-        - cd /home/gitlab-runner
-        - source env/bin/activate
         - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/backend
         - eb deploy
-        - deactivate
