@@ -21,8 +21,11 @@ class MineStockPrices:
         self._api_key = "NFBPXFB58FY9UAY0"
         self._base_url = "https://www.alphavantage.co/query"
 
-    def get_response_from_api
-    (self, function, search_term, datatype="json", interval=None):
+    def get_response_from_api(self, 
+                              function, 
+                              search_term, 
+                              datatype="json", 
+                              interval=None):
         '''
             Helper method to return json objects of ticker symbol from API
             function: table/database name defined by alphavantage.co
@@ -64,8 +67,9 @@ class MineStockPrices:
             Default return format is JSON.
             search_term: ticker symbol to search for stock prices
         '''
-        return self.get_response_from_api
-        ("TIME_SERIES_WEEKLY", search_term, datatype)
+        return self.get_response_from_api("TIME_SERIES_WEEKLY", 
+                                          search_term, 
+                                          datatype)
 
     def get_monthly_stocks(self, search_term):
         '''
