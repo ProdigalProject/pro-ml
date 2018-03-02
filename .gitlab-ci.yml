@@ -8,6 +8,5 @@ job1.0:
     only: 
         - hk_iteration3
     script:
-        - pip install pytest
         - cd /home/gitlab-runner/builds/d82fbb85/0/prodigal/pro-ml/data_mine
         - python -m pytest -s -v tests/
