@@ -8,4 +8,5 @@ job1.0:
     only: 
         - hk_iteration3
     script:
-        - echo "HELO"
+        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/data_mine
+        - python -m pytest -s -v tests/
