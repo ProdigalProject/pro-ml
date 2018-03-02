@@ -8,4 +8,4 @@ job1.0:
     only: 
         - hk_iteration3
     script:
-        - echo "HELLO"
+        - echo "HELO"
