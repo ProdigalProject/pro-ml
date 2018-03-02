@@ -1,4 +1,0 @@
-job1: 
-  script: 
-    - echo "HELLO"
-    - echo "WORLD"
