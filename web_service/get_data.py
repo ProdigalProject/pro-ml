@@ -21,7 +21,8 @@ class Data:
         'execute?api-version=2.0&format=swagger'
         api_key = 'e7MiObHOMV+CJ9/I1lahT8HighwH4jDbmhcc30SgePzhkVl4WEEQ/' +
         'nCpSqNCCZ2K8YIefHKiCQbzpdVCBHlqhA=='
-        headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
+        headers = {'Content-Type': +
+                   'application/json', 'Authorization': ('Bearer ' + api_key)}
         req = urllib.request.Request(url, body, headers)
 
         try:
