@@ -29,3 +29,10 @@ job1.2:
         - python -m pytest -s -v tests/
         - cd ..
 
+job_deploy: 
+    stage: deploy
+    only:
+        - hk_iteration3
+    script: 
+        - echo "Deployed."
+
