@@ -8,15 +8,15 @@ job1:
     only: 
         - hk_iteration3
     script:
-        - echo "Starting"
+        - pip install pytest
+        - git clone https://githlab.engr.illinois.edu/prodigal/pro-ml.git
+        - git checkout hk_iteration3
 
 job2: 
     stage: test
     only: 
         - hk_iteration3
     script: 
-        - sudo su -
-        - cd /home/ec2-user/workspace/pro-ml
-        - source env/bin/activate
+        - cd /home/gitlab-runner/pro-ml/data_mine
         - python -m pytest -s -v tests/
 
