@@ -6,15 +6,8 @@ stages:
 job1.0: 
     stage: test
     only: 
-        - hk_iteration3
+        - master
     script:
         - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/data_mine
         - python -m pytest -s -v tests/
 
-job1.1: 
-    stage: test
-    only: 
-        - hk_iteration3
-    script:
-        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/web_service
-        - python -m pytest -s -v tests/
