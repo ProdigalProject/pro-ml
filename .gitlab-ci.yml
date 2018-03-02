@@ -3,11 +3,21 @@ stages:
     - test
     - deploy
 
-job1.0: 
+job1: 
     stage: test
     only: 
-        - master
+        - hk_iteration3
     script:
         - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/data_mine
         - python -m pytest -s -v tests/
 
+job2: 
+    stage: deploy
+    only: 
+        - hk_iteration3
+    script:
+        - cd /home/gitlab-runner
+        - source env/bin/activate
+        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/backend
+        - eb deploy
+        - deactivate
