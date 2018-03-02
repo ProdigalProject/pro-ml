@@ -6,7 +6,7 @@ stages:
     - test
     - deploy
 
-job1: 
+job_test1: 
     stage: test
     only: 
         - hk_iteration3
@@ -14,7 +14,23 @@ job1:
         - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/data_mine
         - python -m pytest -s -v tests/
 
-job2: 
+job_test2: 
+    stage: test
+    only: 
+        - hk_iteration3
+    script: 
+        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/web_service
+        - pytest -s -v
+
+job_test3: 
+    stage: test
+    only: 
+        - hk_iteration3
+    script: 
+        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/backend
+        - python manage.py test
+
+job_deploy: 
     stage: deploy
     only: 
         - hk_iteration3

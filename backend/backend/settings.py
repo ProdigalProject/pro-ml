@@ -84,8 +84,8 @@ DATABASES = {
         'NAME': 'helloworld',
         'USER': 'prodigal',
         'PASSWORD': 'DarkoMarinov1',
-        'HOST': 'prodigal-mysql-db.cwrjwojncyjz.us-east-2.rds.amazonaws.com', 
-        'PORT': '3306', 
+        'HOST': 'prodigal-mysql-db.cwrjwojncyjz.us-east-2.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
@@ -129,8 +129,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = ''
 
-STATICFILES_DIRS = ( 
-    os.path.join(BASE_DIR, 'static'), 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
     './static',
-    #'/var/www/backend/static/'
 )
