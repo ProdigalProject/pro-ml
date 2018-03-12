@@ -26,6 +26,7 @@ SECRET_KEY = '+tvl7fovy=2&l433%vhpp4jenht==w4-7mkpuv=sl4+ob1rd*5'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     '18.217.102.60',
     'prodigal-ml.us-east-2.elasticbeanstalk.com',
 ]
