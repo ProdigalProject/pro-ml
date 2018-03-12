@@ -37,6 +37,7 @@ class MineStockPrices:
         payload["apikey"] = self._api_key
         payload["interval"] = interval
         payload["datatype"] = datatype
+        payload["outputsize"] = 'full'
         response = requests.get(self._base_url, params=payload)
         return response.text
 
