@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 class Stock(models.Model):
     name = models.CharField(max_length=50)
-    ticker = models.CharField(max_length=50, unique=True)
+    ticker = models.CharField(max_length=50)
     high = models.FloatField(blank=True, default=0)
     low = models.FloatField(blank=True, default=0)
     opening = models.FloatField(blank=True, default=0)

@@ -9,15 +9,13 @@ from django.http import Http404
 class StockList(generics.ListCreateAPIView):
     serializer_class = StockSerializer 
     queryset = Stock.objects.all()
-    # filter_backends = (DjangoFilterBackend,)
-    # filter_fields = ('ticker', 'name') 
 
-
-class StockDetail(generics.RetrieveUpdateDestroyAPIView):
+class StockDetail(generics.ListAPIView):
     serializer_class = StockSerializer 
-    queryset = Stock.objects.all() 
-    def get_object(self): 
-        try:
-            return Stock.objects.get(ticker=self.kwargs['ticker'])
-        except: 
+
+    def get_queryset(self): 
+        queryset = Stock.objects.filter(ticker=self.kwargs['ticker'])
+        if queryset: 
+            return queryset
+        else: 
             raise Http404
