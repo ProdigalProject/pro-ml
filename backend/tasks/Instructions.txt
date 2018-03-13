@@ -1,0 +1,5 @@
+* Install rabbitmq-server, pika 
+* Run rabbitmq-server in the background 
+* Create user pdg with pwd: pdg
+* Create vhost /prodigal
+* Set permissions for /prodigal
