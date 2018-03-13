@@ -9,6 +9,5 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks() 
 
 @app.task(bind=True) 
-def add(x, y): 
+def debug_task(x, y): 
     print("adding work...") 
-    return x + y
