@@ -13,9 +13,12 @@ class InsertTickers:
 
     def get_datelist(self): 
         date_av = [] 
-        datelist = pandas.date_range(end=pandas.datetime.today(), periods=self.date_range).tolist()
+        datelist = pandas.date_range(end=pandas.datetime.today(), 
+                                     periods=self.date_range).tolist()
         for i in datelist: 
-            s = str(i.year) + "-" + str(i.month).zfill(2) + "-" + str(i.day).zfill(2)
+            s = str(i.year) + "-" +\
+                str(i.month).zfill(2) + "-" +\
+                str(i.day).zfill(2)
             date_av.append(s) 
         return date_av
 

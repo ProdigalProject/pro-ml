@@ -37,6 +37,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'stocks.apps.StocksConfig',
     'rest_framework',
+    'django_celery_results',
     'django_filters', 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -135,3 +136,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
     './static',
 )
+
+CELERY_RESULT_BACKEND = 'django-db'
