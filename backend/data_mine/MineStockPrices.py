@@ -1,6 +1,5 @@
 import requests
 import time
-from ExtractTickers import ExtractTickers
 
 
 class MineStockPrices:
@@ -17,14 +16,13 @@ class MineStockPrices:
             _api_key: API token for alphavantage.co
             _base_url: Base URL to call alaphavantage API
         '''
-        self._etc = ExtractTickers()
         self._api_key = "NFBPXFB58FY9UAY0"
         self._base_url = "https://www.alphavantage.co/query"
 
-    def get_response_from_api(self, 
-                              function, 
-                              search_term, 
-                              datatype="json", 
+    def get_response_from_api(self,
+                              function,
+                              search_term,
+                              datatype="json",
                               interval=None):
         '''
             Helper method to return json objects of ticker symbol from API
@@ -68,8 +66,8 @@ class MineStockPrices:
             Default return format is JSON.
             search_term: ticker symbol to search for stock prices
         '''
-        return self.get_response_from_api("TIME_SERIES_WEEKLY", 
-                                          search_term, 
+        return self.get_response_from_api("TIME_SERIES_WEEKLY",
+                                          search_term,
                                           datatype)
 
     def get_monthly_stocks(self, search_term):

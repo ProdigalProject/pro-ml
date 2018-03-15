@@ -12,23 +12,7 @@ job_test1:
     only: 
         - master
     script:
-        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/data_mine
-        - python -m pytest -s -v tests/
-
-job_test2: 
-    stage: test
-    only: 
-        - master
-    script: 
-        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/web_service
-        - python3 -m pytest -s -v
-
-job_test3: 
-    stage: test
-    only: 
-        - master
-    script: 
-        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/backend
+        - cd /home/gitlab-runner/builds/924d7679/0/prodigal/pro-ml/backend
         - python3 manage.py test
 
 job_deploy: 
@@ -36,5 +20,4 @@ job_deploy:
     only: 
         - master
     script:
-        - cd /home/gitlab-runner/builds/cdbdb0ba/0/prodigal/pro-ml/backend
-        - eb deploy
+        - cd /home/gitlab-runner/builds/924d7679/0/prodigal/pro-ml/backend
