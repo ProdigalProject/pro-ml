@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import requests
+import json
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
@@ -17,6 +19,11 @@ pred = model.predict([[163.045, 165.81, 162.88]])
 for i in pred:
     i = str(float(i))
     print("Predicted Closing Price: " + "$" + i)
+
+data = {"name": "AAPL", "prediction": pred}
+    
+requests.post('http://prodigal-ml.us-east-2.elasticbeanstalk.com/stocks/prediction', data)
+
 
 """
 df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
