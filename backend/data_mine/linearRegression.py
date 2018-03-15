@@ -25,7 +25,7 @@ data = {"name": "AAPL", "prediction": pred}
 r = json.dumps(data)
 load_r = json.loads(r)
 
-requests.post('http://prodigal-ml.us-east-2.elasticbeanstalk.com/stocks/prediction/?format=json', load_r)
+requests.post('http://prodigal-ml.us-east-2.elasticbeanstalk.com/stocks/prediction/?format=json', data)
 
 """
 df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
