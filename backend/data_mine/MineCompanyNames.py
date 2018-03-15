@@ -10,7 +10,7 @@ class MineCompanyNames:
         self.http = urllib3.PoolManager() 
         self.base = 'http://stocks.tradingcharts.com/stocks/symbols/b/all/'
         self.website = 'http://stocks.tradingcharts.com'
-        self.api = 'http://127.0.0.1:8000/companies/'
+        self.api = 'http://prodigal-ml.us-east-2.elasticbeanstalk.com/companies/'
         self.links = [self.base+x for x in ascii_lowercase] 
         self.soups = [] 
 
