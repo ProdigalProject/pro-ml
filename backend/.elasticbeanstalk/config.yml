@@ -1,19 +1,11 @@
 branch-defaults:
   default:
     environment: pdg-env
-    group_suffix: null
-environment-defaults:
-  pdg-env:
-    branch: null
-    repository: null
-  pdg-ml-env:
-    branch: null
-    repository: null
 global:
   application_name: prodigal-ml
   branch: null
   default_ec2_keyname: aws_leesin
-  default_platform: Python 3.4
+  default_platform: Python 3.6
   default_region: us-east-2
   include_git_submodules: true
   instance_profile: null
@@ -23,9 +15,3 @@ global:
   repository: null
   sc: null
   workspace_type: Application
-packages:
-  yum:
-    gcc: []
-    gcc-c++: []
-    python34-devel: []
-    python36-devel: []
