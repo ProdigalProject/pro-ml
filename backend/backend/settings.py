@@ -26,6 +26,7 @@ SECRET_KEY = '+tvl7fovy=2&l433%vhpp4jenht==w4-7mkpuv=sl4+ob1rd*5'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     '18.217.102.60',
     'prodigal-ml.us-east-2.elasticbeanstalk.com',
 ]
@@ -35,7 +36,10 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'stocks.apps.StocksConfig',
+    'data_mine.apps.DataMineConfig', 
     'rest_framework',
+    'django_celery_results',
+    'django_filters', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,7 +85,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'helloworld',
+        'NAME': 'prodigal_ml',
         'USER': 'prodigal',
         'PASSWORD': 'DarkoMarinov1',
         'HOST': 'prodigal-mysql-db.cwrjwojncyjz.us-east-2.rds.amazonaws.com',
@@ -114,13 +118,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Central'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+#USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -133,3 +138,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
     './static',
 )
+
+# Celery configurations
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = TIME_ZONE
