@@ -1,5 +1,5 @@
-from stocks.models import Stock
-from stocks.serializers import StockSerializer
+from stocks.models import Stock, Company
+from stocks.serializers import StockSerializer, CompanySerializer
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from django.http import Http404
@@ -22,3 +22,7 @@ class StockDetail(generics.ListAPIView):
             return queryset
         else: 
             raise Http404
+
+class CompanyList(generics.ListCreateAPIView): 
+    serializer_class = CompanySerializer 
+    queryset = Company.objects.all()

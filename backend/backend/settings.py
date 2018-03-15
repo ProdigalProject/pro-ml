@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'helloworld',
+        'NAME': 'test_helloworld',
         'USER': 'prodigal',
         'PASSWORD': 'DarkoMarinov1',
         'HOST': 'prodigal-mysql-db.cwrjwojncyjz.us-east-2.rds.amazonaws.com',
@@ -118,13 +118,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Central'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+#USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -138,4 +139,6 @@ STATICFILES_DIRS = (
     './static',
 )
 
+# Celery configurations
 CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = TIME_ZONE
