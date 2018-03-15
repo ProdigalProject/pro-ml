@@ -3,6 +3,9 @@ branch-defaults:
     environment: pdg-env
     group_suffix: null
 environment-defaults:
+  pdg-env:
+    branch: null
+    repository: null
   pdg-ml-env:
     branch: null
     repository: null
@@ -23,3 +26,5 @@ global:
 packages:
   yum:
     gcc: []
+    gcc-c++: []
+    python-devel: []
