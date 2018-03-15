@@ -20,12 +20,10 @@ for i in pred:
     i = str(float(i))
     print("Predicted Closing Price: " + "$" + i)
 
-data = {"name": "AAPL", "prediction": pred[0]}
+data = {"ticker": "AAPL", "prediction": pred[0]+1.2, "date_ran_experiment": "2018-03-15"}
 
-r = json.dumps(data)
-load_r = json.loads(r)
-
-requests.post('http://prodigal-ml.us-east-2.elasticbeanstalk.com/stocks/prediction/?format=json', data)
+r = requests.post('http://prodigal-ml.us-east-2.elasticbeanstalk.com/prediction/', data=data)
+print(r)
 
 """
 df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
