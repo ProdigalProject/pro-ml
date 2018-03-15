@@ -7,5 +7,5 @@ class ApiTestCase(TestCase):
 
     def test_api_get(self):
         r = requests.get("http://prodigal-ml.us-east-2.elasticbeanstalk.com\
-                        /stocks/1/?format=json")
+                        /stocks/AAPL/")
         assert(r is not None)
