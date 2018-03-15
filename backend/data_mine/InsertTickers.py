@@ -1,6 +1,7 @@
 import json 
 import pandas
 import requests 
+import time
 from MineStockPrices import MineStockPrices
 
 class InsertTickers: 
@@ -37,6 +38,8 @@ class InsertTickers:
             for ticker in tickers: 
                 custom_data = self.get_custom_tickers(ticker) 
                 custom_list.append(custom_data)
+                time.sleep(2) 
+                print(custom_data)
 
             date_list = self.get_datelist(num_dates)
             self.post_to_api(custom_list, date_list) 
@@ -48,26 +51,39 @@ class InsertTickers:
         ''' 
         for ticker in ticker_list: 
             json_data = json.loads(ticker) 
-            daily_data = json_data["Time Series (Daily)"]
-            symbol = json_data["Meta Data"]["2. Symbol"] 
-
-            for k, v in daily_data.items(): 
-                if k in date_list: 
-                    api_data = {} 
-                    api_data["name"] = "Apple Inc."  # should come from a table
-                    api_data["ticker"] = symbol
-                    api_data["opening"] = v["1. open"] 
-                    api_data["high"] = v["2. high"] 
-                    api_data["low"] = v["3. low"] 
-                    api_data["closing"] = v["4. close"] 
-                    api_data["volume"] = v["5. volume"] 
-                    api_data["date"] = k
-                    # print(api_data) 
-                    requests.post("http://127.0.0.1:8000/stocks/", data=api_data)
+            if 'Error Message' not in json_data.keys(): 
+                daily_data = json_data["Time Series (Daily)"]
+                symbol = json_data["Meta Data"]["2. Symbol"] 
+                base_url = 'http://127.0.0.1:8000/companies/' + symbol
+                request_json = requests.get(base_url).json()
+                if type(request_json) is not list: 
+                    company_name = 'Company name DNE'
+                else: 
+                    company_name = request_json[0]['company_name']
+                print(company_name) 
+                for k, v in daily_data.items(): 
+                    if k in date_list: 
+                        api_data = {} 
+                        api_data["name"] = company_name 
+                        api_data["ticker"] = symbol
+                        api_data["opening"] = v["1. open"] 
+                        api_data["high"] = v["2. high"] 
+                        api_data["low"] = v["3. low"] 
+                        api_data["closing"] = v["4. close"] 
+                        api_data["volume"] = v["5. volume"] 
+                        api_data["date"] = k
+                        print(api_data) 
+                        requests.post("http://127.0.0.1:8000/stocks/", data=api_data)
 
 def main(): 
+    tickers = [] 
+    r = requests.get("http://127.0.0.1:8000/companies")
+    for data in r.json(): 
+        if data['exchange'] == 'Nasdaq Stock Exchange': 
+            tickers.append(data['ticker']) 
+    
     ins = InsertTickers()
-    ins.run(365, ['AAPL']) 
+    ins.run(365, tickers) 
 
 
 if __name__ == "__main__": main()  
