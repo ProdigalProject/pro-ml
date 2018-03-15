@@ -20,7 +20,7 @@ for i in pred:
     i = str(float(i))
     print("Predicted Closing Price: " + "$" + i)
 
-data = {"name": "AAPL", "prediction": pred}
+data = {"name": "AAPL", "prediction": pred[0]}
 
 r = json.dumps(data)
 load_r = json.loads(r)
