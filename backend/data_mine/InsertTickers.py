@@ -1,5 +1,5 @@
 import json 
-import pandas
+#import pandas Temporary
 import requests 
 import time
 from data_mine.MineStockPrices import MineStockPrices
