@@ -20,6 +20,6 @@ global:
   repository: null
   sc: null
   workspace_type: Application
-packages: 
-  yum: 
+packages:
+  yum:
     gcc: []
