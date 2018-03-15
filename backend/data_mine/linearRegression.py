@@ -21,9 +21,11 @@ for i in pred:
     print("Predicted Closing Price: " + "$" + i)
 
 data = {"name": "AAPL", "prediction": pred}
-    
-requests.post('http://prodigal-ml.us-east-2.elasticbeanstalk.com/stocks/prediction', data)
 
+r = json.dumps(data)
+load_r = json.loads(r)
+
+requests.post('http://prodigal-ml.us-east-2.elasticbeanstalk.com/stocks/prediction/?format=json', load_r)
 
 """
 df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
