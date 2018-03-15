@@ -21,4 +21,3 @@ job_deploy:
         - hk_iteration4
     script:
         - cd /home/gitlab-runner/builds/924d7679/0/prodigal/pro-ml/backend
-        - eb deploy
