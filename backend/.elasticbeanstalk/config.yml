@@ -9,7 +9,7 @@ environment-defaults:
 global:
   application_name: prodigal-ml
   branch: null
-  default_ec2_keyname: null
+  default_ec2_keyname: aws_leesin
   default_platform: Python 3.4
   default_region: us-east-2
   include_git_submodules: true
@@ -20,3 +20,6 @@ global:
   repository: null
   sc: null
   workspace_type: Application
+packages: 
+  yum: 
+    gcc: []
