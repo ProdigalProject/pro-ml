@@ -1,6 +1,6 @@
 import requests
 import time
-from data_mine.ExtractTickers import ExtractTickers
+from ExtractTickers import ExtractTickers
 
 
 class MineStockPrices:

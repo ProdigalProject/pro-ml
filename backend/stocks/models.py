@@ -19,5 +19,5 @@ class Prediction(models.Model):
 
 class Company(models.Model): 
     ticker = models.CharField(max_length=50)
-    company_name = models.CharField(max_length=100)
+    company_name = models.CharField(max_length=100, unique=True)
     exchange = models.CharField(max_length=100) 

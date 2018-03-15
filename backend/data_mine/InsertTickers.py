@@ -1,7 +1,7 @@
 import json 
 import pandas
 import requests 
-from data_mine.MineStockPrices import MineStockPrices
+from MineStockPrices import MineStockPrices
 
 class InsertTickers: 
 
@@ -62,12 +62,12 @@ class InsertTickers:
                     api_data["closing"] = v["4. close"] 
                     api_data["volume"] = v["5. volume"] 
                     api_data["date"] = k
-                    print(api_data) 
-                    # requests.post("http://prodigal-ml.us-east-2.elasticbeanstalk.com/stocks/", data=api_data)
+                    # print(api_data) 
+                    requests.post("http://127.0.0.1:8000/stocks/", data=api_data)
 
 def main(): 
     ins = InsertTickers()
-    ins.run(1, ['AAPL']) 
+    ins.run(365, ['AAPL']) 
 
 
 if __name__ == "__main__": main()  

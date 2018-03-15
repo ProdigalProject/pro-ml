@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test_helloworld',
+        'NAME': 'prodigal_ml',
         'USER': 'prodigal',
         'PASSWORD': 'DarkoMarinov1',
         'HOST': 'prodigal-mysql-db.cwrjwojncyjz.us-east-2.rds.amazonaws.com',

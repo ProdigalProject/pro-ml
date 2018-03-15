@@ -25,8 +25,9 @@ class MineCompanyNames:
                 json_dict['company_name'] = company_names[0].text.strip()
                 json_dict['ticker'] = company_names[1].text.strip()
                 json_dict['exchange'] = exchange_tag.text.strip()
-                if json_dict['exchange'] == 'American Stock Exchange' or\
-                   json_dict['exchange'] == 'Nasdaq Stock Exchange': 
+                # if json_dict['exchange'] == 'American Stock Exchange':# or\
+                   # json_dict['exchange'] == 'Nasdaq Stock Exchange': 
+                if json_dict['exchange'] == 'New York Stock Exchange':# or\
                     companies.append(json_dict)
         return companies
     
