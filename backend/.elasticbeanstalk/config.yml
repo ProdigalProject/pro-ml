@@ -27,4 +27,5 @@ packages:
   yum:
     gcc: []
     gcc-c++: []
-    python-devel: []
+    python34-devel: []
+    python36-devel: []
