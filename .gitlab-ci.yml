@@ -10,7 +10,7 @@ stages:
 job_test1: 
     stage: test
     only: 
-        - hk_iteration4
+        - master
     script:
         - cd /home/gitlab-runner/builds/924d7679/0/prodigal/pro-ml/backend
         - python3 manage.py test
@@ -18,6 +18,6 @@ job_test1:
 job_deploy: 
     stage: deploy
     only: 
-        - hk_iteration4
+        - master
     script:
         - cd /home/gitlab-runner/builds/924d7679/0/prodigal/pro-ml/backend
