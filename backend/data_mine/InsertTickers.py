@@ -2,7 +2,7 @@ import json
 import pandas
 import requests 
 import time
-from MineStockPrices import MineStockPrices
+from data_mine.MineStockPrices import MineStockPrices
 
 class InsertTickers: 
 
@@ -22,7 +22,7 @@ class InsertTickers:
             date_av.append(s) 
         return date_av
 
-    def get_custom_tickers(self, ticker): 
+    def get_custom_ticker(self, ticker): 
         custom_data = self.mine.get_daily_stocks(ticker)
         return custom_data 
 
@@ -36,7 +36,7 @@ class InsertTickers:
         elif self.custom == 'all': 
             custom_list = []
             for ticker in tickers: 
-                custom_data = self.get_custom_tickers(ticker) 
+                custom_data = self.get_custom_ticker(ticker) 
                 custom_list.append(custom_data)
                 time.sleep(2) 
                 print(custom_data)

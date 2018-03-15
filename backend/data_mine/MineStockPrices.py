@@ -1,6 +1,5 @@
 import requests
 import time
-from ExtractTickers import ExtractTickers
 
 
 class MineStockPrices:
@@ -17,7 +16,6 @@ class MineStockPrices:
             _api_key: API token for alphavantage.co
             _base_url: Base URL to call alaphavantage API
         '''
-        self._etc = ExtractTickers()
         self._api_key = "NFBPXFB58FY9UAY0"
         self._base_url = "https://www.alphavantage.co/query"
 
