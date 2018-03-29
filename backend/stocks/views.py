@@ -69,3 +69,29 @@ def run_experiment_return_results(request, ticker):
     for index in range(1, 6):
         results.append({"id": index, "ticker": ticker, "value": expr_result[index - 1]})
     return JsonResponse(results, status=200, safe=False)
+
+
+def run_update(request, ticker):
+    """
+    Runs update on specified ticker symbol on request from API endpoint. For daily update automation purpose.
+    :param request: Http request
+    :param ticker: Ticker symbol passed from endpoint
+    :return: JSON response containing operation result.
+    """
+    result = Stock.update_by_ticker(ticker)
+    if result == 0:
+        return JsonResponse({"result": "OK"}, status=200)
+    elif result == 1:
+        return JsonResponse({"result": "Error", "error": "Record already exists"}, status=200)
+    else:
+        return JsonResponse({"result": "Error", "error": "Failed to find matching company"}, status=404)
+
+
+def run_update_all(request):
+    """
+    Runs update on all ticker symbols in database on request from API endpoint. For daily update automation purpose.
+    :param request: Http request
+    :return: JSON response containing operation result on each ticker.
+    """
+    result = Stock.update_all()
+    return JsonResponse(result, status=200)
