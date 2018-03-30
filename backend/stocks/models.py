@@ -19,7 +19,8 @@ class Stock(models.Model):
     @staticmethod
     def update_by_ticker(ticker):
         """
-        Get recent stock data of given ticker from AlphaVantage API and POSTs latest data to database.
+        Get recent stock data of given ticker from AlphaVantage API and POSTs latest data to database, then DELETEs
+        oldest data from database.
         Fails if company doesn't exist in database or record for current date exists.
         :param ticker: Ticker symbol to update data
         :return: 0: success, 1: record already exists, 2: company not found in database
@@ -35,10 +36,17 @@ class Stock(models.Model):
         meta = response["Meta Data"]
         print(meta)
         last_refresh = meta["3. Last Refreshed"][:10]  # market not closed?????
+        stock_objs = Stock.objects.filter(ticker=ticker).order_by('-date')
         try:
-            Stock.objects.get(ticker=ticker, date=last_refresh)  # try finding record with latest date
+            stock_objs.get(date=last_refresh)
+            print('record exists')
             return 1
-        except Stock.DoesNotExist:  # Latest record doesn't exist; start update
+        except Stock.DoesNotExist:
+            # Delete oldest entry
+            oldest_obj = Stock.objects.last()
+            print(oldest_obj.date)
+            oldest_obj.delete()
+            # Add to database using API
             stock_data = response["Time Series (Daily)"][last_refresh]
             api_data = dict()
             api_data["name"] = company_obj.company_name
