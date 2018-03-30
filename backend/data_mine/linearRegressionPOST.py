@@ -11,11 +11,13 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
+
 class predictor:
     # get json from website
     @staticmethod
     def get_json(ticker_symbol):
-        data_url = "http://prodigal-ml.us-east-2.elasticbeanstalk.com/stocks/"+ticker_symbol+"/?format=json"
+        data_url = ("http://prodigal-ml.us-east-2.elasticbeanstalk.com"
+                    "/stocks/"+ticker_symbol+"/?format=json")
         file = requests.get(url=data_url)
         json_file = file.json()
         return json_file
@@ -25,7 +27,8 @@ class predictor:
     def create_csv(json_file):
         with open('json_data.csv', 'w') as json_data:
             filewriter = csv.writer(json_data, delimiter=',')
-            filewriter.writerow(['timestamp','open','high','low','close','volume'])
+            filewriter.writerow(['timestamp', 'open',
+                                 'high', 'low', 'close', 'volume'])
             for data in json_file:
                 timestamp = data["date"]
                 open_price = data["opening"]
@@ -33,7 +36,9 @@ class predictor:
                 low_price = data["low"]
                 close_price = data["closing"]
                 volume = data["volume"]
-                filewriter.writerow([timestamp, open_price, high_price, low_price, close_price, volume])
+                filewriter.writerow([timestamp, open_price,
+                                     high_price, low_price,
+                                     close_price, volume])
 
     # predict closing price
     @staticmethod
@@ -43,41 +48,51 @@ class predictor:
         X = data[["open", "high", "low"]]
         y = data["close"]
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 0)
+        X_train, X_test,
+        y_train, y_test = train_test_split(X, y,
+                                           test_size=0.3, random_state=0)
         model = LinearRegression()
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
 
         pred = model.predict([[open_price, high_price, low_price]])
         for i in pred:
-            i = str(float(round(i,2)))
-            print("Predicted Closing Price: " + "$" + i)
-
-        # post prediction
-        # data = {"ticker": "AAPL", "prediction": pred[0], "date_ran_experiment": "2018-03-15"}
-        # r = requests.post('http://prodigal-ml.us-east-2.elasticbeanstalk.com/prediction/', data=data)
-        # print(r)
+            i = str(float(round(i, 2)))
+            # print("Predicted Closing Price: " + "$" + i)
+            return i
 
         # evaluate prediction model
         # plt.plot(y_test, y_test, c='r', linewidth=0.5)
         # plt.scatter(y_test, y_pred, c='b', s=1)
         # plt.show()
-        
-def main():
+
+
+def return_prediction(ticker_symbol):
     p = predictor()
-    json_file = p.get_json("AAPL")
+    json_file = p.get_json(ticker_symbol)
     p.create_csv(json_file)
     csv_file = 'json_data.csv'
-    
+    predictions = []
+
     with open(csv_file, newline='') as f:
-        reader_r = csv.reader(f,delimiter=',')
+        reader_r = csv.reader(f, delimiter=',')
         next(reader_r)
         for index, line in enumerate(reader_r):
             print("Input (open, high, low):", line[1], line[2], line[3])
-            p.predict_closing(float(line[1]), float(line[2]), float(line[3]))
+            predictions.insert(index,
+                               float(p.predict_closing(float(line[1]),
+                                                       float(line[2]),
+                                                       float(line[3]))))
             print()
             if (index >= 4):
                 break
+
+    return predictions
+
+
+def main():
+    predictions = return_prediction("AAPL")
+    print(predictions)
 
 if __name__ == "__main__":
     main()
