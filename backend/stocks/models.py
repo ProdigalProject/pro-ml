@@ -84,10 +84,21 @@ class Stock(models.Model):
         return return_dict
 
 
-class Prediction(models.Model): 
+class Prediction(models.Model):
+    """
+    Class to represent prediction data. Table is abandoned for now; only functions are used.
+    """
     ticker = models.CharField(max_length=50)
     prediction = models.FloatField(blank=True, default=0)
     date_ran_experiment = models.DateField(blank=True, null=True)
+
+    @staticmethod
+    def run_experiment(ticker):
+        """
+        Run experiment for given ticker and returns list of experiment results.
+        :param ticker: Ticker symbol to run experiment
+        :return: List of experiment results.
+        """
 
 
 class Company(models.Model): 
