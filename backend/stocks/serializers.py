@@ -5,7 +5,7 @@ from stocks.models import Stock, Company, Prediction
 class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
-        fields = ("name", "ticker", "high", "low",
+        fields = ("ticker", "high", "low",
                   "opening", "closing", "volume", "date")
 
 
