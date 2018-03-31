@@ -1,5 +1,6 @@
 import requests
 from stocks.models import Stock, Company
+import stocks.linear_regression as predictor
 
 
 class AlphaAPICaller:
@@ -39,7 +40,7 @@ class AlphaAPICaller:
                 latest_history = api_data
         if not meta:
             return json_result
-        else:
+        else:  # if meta=True, return data of latest date as separate attribute
             json_result_with_meta = {"latest_data": latest_history, "history": json_result}
             return json_result_with_meta
 
@@ -63,17 +64,16 @@ class StockHistoryUpdater:
         except Company.DoesNotExist:  # company not in database
             return 2
         api_response = AlphaAPICaller().get_compact_date(ticker, meta=True)
-        last_refresh = api_response['latest_data']['date']  # TODO: what happens if market not closed?????
-        stock_objs = Stock.objects.filter(ticker=ticker).order_by('-date')
+        last_refresh = api_response['latest_data']['date'][:10]  # TODO: what happens if market not closed?????
         try:
-            stock_objs.get(date=last_refresh)
+            Stock.objects.get(ticker=ticker, date=last_refresh)
             print('record exists')
             return 1
         except Stock.DoesNotExist:
             # Delete oldest entry
-            oldest_obj = Stock.objects.last()
+            oldest_obj = Stock.objects.earliest('date')
             print(oldest_obj.date)
-            oldest_obj.delete()
+            # oldest_obj.delete()
             # Add to database using model or API
             json_data = api_response['latest_data']
             print(json_data)
@@ -114,17 +114,21 @@ class ExperimentManager:
     @staticmethod
     def run_experiment(ticker):
         """
-        Run experiment for given ticker and returns list of experiment results. Fails if company doesn't exist in
-        database.
+        Run experiment for given ticker and returns list of experiment results packed in JSON format.
+        Fails if company doesn't exist in database.
         :param ticker: Ticker symbol to run experiment
-        :return: List of experiment results. -1 if company is not found in database.
+        :return: JSON containing list of experiment results. -1 if company is not found in database.
         """
         try:
             Company.objects.get(ticker=ticker)
         except Company.DoesNotExist:  # company not in database
             return -1
-        expr_result = [100, 101, 102, 103, 104]  # numbers to be returned from experiment module
+        expr_result = predictor.return_prediction(ticker)
         results = []
         for index in range(1, 6):
-            results.append({"id": index, "ticker": ticker, "value": expr_result[index - 1]})
+            api_data = dict()
+            api_data['value'] = expr_result[index - 1]
+            api_data['ticker'] = ticker
+            api_data['id'] = index
+            results.append(api_data)
         return results
