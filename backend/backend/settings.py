@@ -86,9 +86,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'prodigal_ml',
-        'USER': 'prodigal',
+        'USER': 'prodigaluser@prodigal',
         'PASSWORD': 'DarkoMarinov1',
-        'HOST': 'prodigal-mysql-db.cwrjwojncyjz.us-east-2.rds.amazonaws.com',
+        'HOST': 'prodigal.mysql.database.azure.com',
         'PORT': '3306',
     }
 }

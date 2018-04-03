@@ -1,5 +1,5 @@
 import json
-# import pandas Temporary
+import pandas
 import requests
 import time
 from data_mine.MineStockPrices import MineStockPrices
@@ -85,7 +85,7 @@ def main():
     for data in r.json():
         if data['exchange'] == 'Nasdaq Stock Exchange':
             tickers.append(data['ticker'])
-
+    print(tickers)
     ins = InsertTickers()
     ins.run(365, tickers)
 
