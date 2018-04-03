@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'stocks.apps.StocksConfig',
     'data_mine.apps.DataMineConfig', 
     'rest_framework',
+    'rest_framework_bulk', 
     'django_celery_results',
     'django_filters', 
     'django.contrib.admin',

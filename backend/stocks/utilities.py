@@ -1,5 +1,5 @@
 import requests
-from stocks.models import Stock, Company
+# from stocks.models import Stock, Company
 import stocks.linear_regression as predictor
 
 
@@ -20,29 +20,33 @@ class AlphaAPICaller:
         base_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
         base_url = base_url + "&symbol=" + ticker + "&apikey=" + self.api_key
         response = requests.get(base_url).json()
-        daily_dataset = response["Time Series (Daily)"]
-        metadata = response["Meta Data"]
-        latest_date = metadata["3. Last Refreshed"]
-        json_result = []
-        latest_history = None
-        for date, stock_data in daily_dataset.items():
-            api_data = dict()
-            # not returning name anymore
-            api_data["ticker"] = ticker
-            api_data["opening"] = stock_data["1. open"]
-            api_data["high"] = stock_data["2. high"]
-            api_data["low"] = stock_data["3. low"]
-            api_data["closing"] = stock_data["4. close"]
-            api_data["volume"] = stock_data["5. volume"]
-            api_data["date"] = date
-            json_result.append(api_data)
-            if date == latest_date:
-                latest_history = api_data
-        if not meta:
-            return json_result
-        else:  # if meta=True, return data of latest date as separate attribute
-            json_result_with_meta = {"latest_data": latest_history, "history": json_result}
-            return json_result_with_meta
+        try: 
+            daily_dataset = response["Time Series (Daily)"]
+            metadata = response["Meta Data"]
+            latest_date = metadata["3. Last Refreshed"]
+            json_result = []
+            latest_history = None
+            for date, stock_data in daily_dataset.items():
+                api_data = dict()
+                # not returning name anymore
+                api_data["ticker"] = ticker
+                api_data["opening"] = stock_data["1. open"]
+                api_data["high"] = stock_data["2. high"]
+                api_data["low"] = stock_data["3. low"]
+                api_data["closing"] = stock_data["4. close"]
+                api_data["volume"] = stock_data["5. volume"]
+                api_data["date"] = date
+                json_result.append(api_data)
+                if date == latest_date:
+                    latest_history = api_data
+            if not meta:
+                return json_result
+            else:  # if meta=True, return data of latest date as separate attribute
+                json_result_with_meta = {"latest_data": latest_history, "history": json_result}
+                return json_result_with_meta
+        except: 
+            empty_list = [] 
+            return empty_list
 
 
 class StockHistoryUpdater:

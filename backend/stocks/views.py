@@ -3,7 +3,9 @@ from stocks.serializers import StockSerializer, CompanySerializer, PredictionSer
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from django.http import Http404, JsonResponse
-from .utilities import StockHistoryUpdater, ExperimentManager
+from .utilities import StockHistoryUpdater, ExperimentManager, AlphaAPICaller
+import requests
+from rest_framework_bulk import ListBulkCreateAPIView
 
 
 class StockList(generics.ListCreateAPIView):
@@ -17,13 +19,26 @@ class StockDetail(generics.ListAPIView):
     serializer_class = StockSerializer 
     filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
+    api = "http://127.0.0.1:8000/stocks/" 
 
     def get_queryset(self): 
         queryset = Stock.objects.filter(ticker=self.kwargs['ticker'])
         if queryset: 
             return queryset
         else: 
-            raise Http404
+            # call alpha vantage
+            ticker = self.kwargs['ticker'] 
+            alpha = AlphaAPICaller() 
+            json_data = alpha.get_compact_date(ticker)
+            # print("JSON_DATA: %s" % json_data) 
+            if len(json_data) > 0: 
+                for i in json_data: 
+                    r = requests.post(self.api, data=i)
+                print("STATUS: %s" % r.status_code)
+                mdata = requests.get(self.api + ticker) 
+                return mdata
+            else: 
+                raise Http404
 
 
 class CompanyList(generics.ListCreateAPIView): 
@@ -42,7 +57,7 @@ class CompanyDetail(generics.ListAPIView):
             raise Http404
 
 
-class PredictionList(generics.ListCreateAPIView): 
+class PredictionList(ListBulkCreateAPIView): 
     serializer_class = PredictionSerializer 
     queryset = Prediction.objects.all()
 
