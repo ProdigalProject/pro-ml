@@ -21,8 +21,7 @@ class StockDetail(generics.ListAPIView):
     serializer_class = StockSerializer 
     filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
-    # api = "http://prodigal-ml.azurewebsites.net/stocks/" 
-    api = "http://127.0.0.1:8000/stocks/" 
+    api = "http://prodigal-ml.azurewebsites.net/stocks/" 
 
     def get_queryset(self): 
         queryset = Stock.objects.filter(ticker=self.kwargs['ticker'])
