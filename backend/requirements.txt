@@ -22,3 +22,4 @@ six==1.11.0
 sklearn==0.0
 urllib3==1.22
 vine==1.1.4
+coverage
