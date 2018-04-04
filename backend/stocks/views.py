@@ -1,9 +1,13 @@
-from stocks.models import Stock, Company, Prediction
-from stocks.serializers import StockSerializer, CompanySerializer, PredictionSerializer
+from stocks.models import Stock
+from stocks.serializers import StockSerializer
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from django.http import Http404, JsonResponse
-from .utilities import StockHistoryUpdater, ExperimentManager
+from .utilities import StockHistoryUpdater, ExperimentManager, AlphaAPICaller
+import requests
+from rest_framework_bulk import ListBulkCreateAPIView
+from django.db import connection 
+import time
 
 
 class StockList(generics.ListCreateAPIView):
@@ -17,46 +21,30 @@ class StockDetail(generics.ListAPIView):
     serializer_class = StockSerializer 
     filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
+    # api = "http://prodigal-ml.azurewebsites.net/stocks/" 
+    api = "http://127.0.0.1:8000/stocks/" 
 
     def get_queryset(self): 
         queryset = Stock.objects.filter(ticker=self.kwargs['ticker'])
         if queryset: 
             return queryset
         else: 
-            raise Http404
+            ticker = self.kwargs['ticker'] 
+            alpha = AlphaAPICaller() 
+            json_data = alpha.get_compact_date(ticker)
+            
+            if len(json_data) > 0: 
+                cur = connection.cursor()
+                query = """INSERT INTO stocks_stock(ticker, high, low,\
+                        opening, closing, volume, date)\
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)"""
 
-
-class CompanyList(generics.ListCreateAPIView): 
-    serializer_class = CompanySerializer 
-    queryset = Company.objects.all()
-
-
-class CompanyDetail(generics.ListAPIView):
-    serializer_class = CompanySerializer 
-
-    def get_queryset(self): 
-        queryset = Company.objects.filter(ticker=self.kwargs['ticker'])
-        if queryset: 
-            return queryset
-        else: 
-            raise Http404
-
-
-class PredictionList(generics.ListCreateAPIView): 
-    serializer_class = PredictionSerializer 
-    queryset = Prediction.objects.all()
-
-
-class PredictionDetail(generics.ListAPIView):
-    serializer_class = PredictionSerializer 
-
-    def get_queryset(self): 
-        queryset = Prediction.objects.filter(ticker=self.kwargs['ticker'])
-        if queryset: 
-            return queryset
-        else: 
-            raise Http404
-
+                my_tuples = [tuple(x.values()) for x in json_data]
+                cur.executemany(query, my_tuples)
+                mdata = requests.get(self.api + ticker).json()
+                return mdata
+            else: 
+                raise Http404
 
 def run_experiment_return_results(request, ticker):
     """

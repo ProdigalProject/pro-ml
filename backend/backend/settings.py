@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '18.217.102.60',
     'prodigal-ml.us-east-2.elasticbeanstalk.com',
+    'prodigal-ml.azurewebsites.net', 
 ]
 
 
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'stocks.apps.StocksConfig',
     'data_mine.apps.DataMineConfig', 
     'rest_framework',
+    'rest_framework_bulk', 
     'django_celery_results',
     'django_filters', 
     'django.contrib.admin',

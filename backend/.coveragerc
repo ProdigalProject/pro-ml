@@ -1,0 +1,17 @@
+# .coveragerc to control coverage.py
+[run]
+branch = True
+omit =
+    manage.py
+    backend/*
+    data_mine/*
+    static/*
+    stocks/__init__.py
+    stocks/migrations/*
+    stocks/admin.py
+    stocks/apps.py
+    stocks/tests.py
+
+
+[html]
+directory = coverage_html_report
