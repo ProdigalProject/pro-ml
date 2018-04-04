@@ -71,12 +71,11 @@ class StockHistoryUpdater:
             return 1
         except Stock.DoesNotExist:
             # Delete oldest entry
-            oldest_obj = Stock.objects.earliest('date')
+            oldest_obj = Stock.objects.get(ticker=ticker).earliest('date')
             print(oldest_obj.date)
-            # oldest_obj.delete()
+            oldest_obj.delete()
             # Add to database using model or API
             json_data = api_response['latest_data']
-            print(json_data)
             new_entry = Stock(ticker=json_data['ticker'], opening=json_data['opening'],
                               high=json_data['high'], low=json_data['low'], closing=json_data['closing'],
                               volume=json_data['volume'], date=json_data['date'])
