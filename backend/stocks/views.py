@@ -6,6 +6,8 @@ from django.http import Http404, JsonResponse
 from .utilities import StockHistoryUpdater, ExperimentManager, AlphaAPICaller
 import requests
 from rest_framework_bulk import ListBulkCreateAPIView
+from django.db import connection 
+import time
 
 
 class StockList(generics.ListCreateAPIView):
@@ -19,6 +21,7 @@ class StockDetail(generics.ListAPIView):
     serializer_class = StockSerializer 
     filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
+    # api = "http://prodigal-ml.azurewebsites.net/stocks/" 
     api = "http://127.0.0.1:8000/stocks/" 
 
     def get_queryset(self): 
@@ -26,16 +29,19 @@ class StockDetail(generics.ListAPIView):
         if queryset: 
             return queryset
         else: 
-            # call alpha vantage
             ticker = self.kwargs['ticker'] 
             alpha = AlphaAPICaller() 
             json_data = alpha.get_compact_date(ticker)
-            # print("JSON_DATA: %s" % json_data) 
+            
             if len(json_data) > 0: 
-                for i in json_data: 
-                    r = requests.post(self.api, data=i)
-                print("STATUS: %s" % r.status_code)
-                mdata = requests.get(self.api + ticker) 
+                cur = connection.cursor()
+                query = """INSERT INTO stocks_stock(ticker, high, low,\
+                        opening, closing, volume, date)\
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+
+                my_tuples = [tuple(x.values()) for x in json_data]
+                cur.executemany(query, my_tuples)
+                mdata = requests.get(self.api + ticker).json()
                 return mdata
             else: 
                 raise Http404
