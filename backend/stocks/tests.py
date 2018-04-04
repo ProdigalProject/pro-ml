@@ -1,13 +1,9 @@
 from django.test import TestCase
-from stocks.models import Stock, Company
+from stocks.models import Stock
 import datetime
 
 
 class ViewTestCase(TestCase):
-    def setUp(self):
-        Company.objects.create(company_name='Microsoft Corporation', ticker='MSFT', exchange='Nasdaq Stock Exchange')
-        Company.objects.create(company_name='Amazon.com, Inc.', ticker='AMZN', exchange='Nasdaq Stock Exchange')
-        Company.objects.create(company_name='Alphabet Inc.', ticker='GOOG', exchange='Nasdaq Stock Exchange')
 
     def test_get_stock_history(self):
         response = self.client.get('/stocks/AAPL?ordering=-date&format=json', follow=True)
@@ -20,28 +16,19 @@ class ViewTestCase(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_get_all_stock_history(self):
+        # fill in data for 2 companies
+        self.client.get('/stocks/AAPL?ordering=-date&format=json', follow=True)
+        self.client.get('/stocks/MSFT?ordering=-date&format=json', follow=True)
+        # get all data
         response = self.client.get('/stocks', follow=True)
         self.assertEqual(response.status_code, 200)
         json_data = response.json()
-        self.assertEqual(len(json_data), 100)
-
-    def test_company_ticker(self):
-        response = self.client.get('/companies/MSFT', follow=True)
-        self.assertEqual(response.status_code, 200)
-        json_data = response.json()
-        self.assertEqual(json_data[0]['company_name'], 'Microsoft Corporation')
-
-    def test_invalid_company_ticker(self):
-        response = self.client.get('/companies/XYZA', follow=True)
-        self.assertEqual(response.status_code, 404)
-
-    def test_all_companies(self):
-        response = self.client.get('/companies', follow=True)
-        self.assertEqual(response.status_code, 200)
-        json_data = response.json()
-        self.assertEqual(len(json_data), 3)
+        self.assertEqual(len(json_data), 200)
 
     def test_run_experiment(self):
+        # fill in data
+        self.client.get('/stocks/AAPL?ordering=-date&format=json', follow=True)
+        # run experiment
         response = self.client.get('/stocks/AAPL/runexpr', follow=True)
         self.assertEqual(response.status_code, 200)
         json_data = response.json()
