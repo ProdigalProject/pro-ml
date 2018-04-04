@@ -6,3 +6,6 @@
 celerybeat-schedule.*
 .idea
 *.csv
+# coverage files
+.coverage
+coverage_html_report
