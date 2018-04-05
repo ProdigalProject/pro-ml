@@ -16,8 +16,8 @@ class Predictor:
     @staticmethod
     def get_json(ticker_symbol):
         """
-        Gets history data of given ticker from API and returns them in JSON file
-        object.
+        Gets history data of given ticker from API and returns them in
+        JSON file object.
         :param ticker_symbol: Ticker to get data
         :return: JSON file object of history of given ticker
         """
@@ -66,7 +66,8 @@ class Predictor:
         x = data[["open", "high", "low"]]
         y = data["close"]
 
-        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3,
+        x_train, x_test, y_train, y_test = train_test_split(x, y,
+                                                            test_size=0.3,
                                                             random_state=0)
         model = LinearRegression()
         model.fit(x_train, y_train)

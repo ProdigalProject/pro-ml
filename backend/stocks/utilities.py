@@ -24,7 +24,7 @@ class AlphaAPICaller:
         try: 
             daily_dataset = response["Time Series (Daily)"]
             metadata = response["Meta Data"]
-            latest_date = metadata["3. Last Refreshed"]
+            latest_date = metadata["3. Last Refreshed"][:10]
             json_result = []
             latest_history = None
             for date, stock_data in daily_dataset.items():
