@@ -30,9 +30,9 @@ class StockDetail(generics.ListAPIView):
             return queryset
         else: 
             ticker = self.kwargs['ticker'] 
-            alpha = AlphaAPICaller() 
+            alpha = AlphaAPICaller()
             json_data = alpha.get_compact_date(ticker)
-            
+
             if len(json_data) > 0: 
                 cur = connection.cursor()
                 query = """INSERT INTO stocks_stock(ticker, high, low,\
@@ -41,7 +41,8 @@ class StockDetail(generics.ListAPIView):
 
                 my_tuples = [tuple(x.values()) for x in json_data]
                 cur.executemany(query, my_tuples)
-                mdata = requests.get(self.api + ticker).json()
+                # mdata = requests.get(self.api + ticker).json()
+                mdata = Stock.objects.filter(ticker=ticker)
                 return mdata
             else: 
                 raise Http404

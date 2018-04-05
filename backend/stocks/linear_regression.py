@@ -1,8 +1,9 @@
 # for converting json to csv
 import csv
 # for linear regression model
+from stocks.models import Stock
+from stocks.serializers import StockSerializer
 import pandas as pd
-import requests
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
@@ -19,9 +20,11 @@ class Predictor:
         :param ticker_symbol: Ticker to get data
         :return: JSON file object of history of given ticker
         """
-        data_url = ("http://127.0.0.1:8000/stocks/" + ticker_symbol + "/?ordering=-date&format=json")
-        file = requests.get(url=data_url)
-        json_file = file.json()
+        stock_data = Stock.objects.filter(ticker=ticker_symbol).order_by('-date')
+        json_file = []
+        for data in stock_data:
+            json_obj = StockSerializer(data).data
+            json_file.append(json_obj)
         return json_file
 
     @staticmethod

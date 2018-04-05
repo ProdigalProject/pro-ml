@@ -67,23 +67,21 @@ class StockHistoryUpdater:
             return 2
         api_response = AlphaAPICaller().get_compact_date(ticker, meta=True)
         last_refresh = api_response['latest_data']['date'][:10]  # TODO: what happens if market not closed?????
-        try:
-            Stock.objects.get(ticker=ticker, date=last_refresh)
+        if Stock.objects.filter(ticker=ticker, date=last_refresh).exists():
             print('record exists')
             return 1
-        except Stock.DoesNotExist:
-            # Delete oldest entry
-            oldest_obj = Stock.objects.get(ticker=ticker).earliest('date')
-            print(oldest_obj.date)
-            oldest_obj.delete()
-            # Add to database using model or API
-            json_data = api_response['latest_data']
-            new_entry = Stock(ticker=json_data['ticker'], opening=json_data['opening'],
-                              high=json_data['high'], low=json_data['low'], closing=json_data['closing'],
-                              volume=json_data['volume'], date=json_data['date'])
-            new_entry.save()
-            # requests.post("http://127.0.0.1:8000/stocks/", data=json_data)
-            return 0
+        # Delete oldest entry
+        oldest_obj = Stock.objects.filter(ticker=ticker).earliest('date')
+        print(oldest_obj.date)
+        oldest_obj.delete()
+        # Add to database using model or API
+        json_data = api_response['latest_data']
+        new_entry = Stock(ticker=json_data['ticker'], opening=json_data['opening'],
+                          high=json_data['high'], low=json_data['low'], closing=json_data['closing'],
+                          volume=json_data['volume'], date=json_data['date'])
+        new_entry.save()
+        # requests.post("http://127.0.0.1:8000/stocks/", data=json_data)
+        return 0
 
     @staticmethod
     def update_all():
