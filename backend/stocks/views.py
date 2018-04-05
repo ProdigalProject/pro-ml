@@ -4,10 +4,7 @@ from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from django.http import Http404, JsonResponse
 from .utilities import StockHistoryUpdater, ExperimentManager, AlphaAPICaller
-import requests
-from rest_framework_bulk import ListBulkCreateAPIView
-from django.db import connection 
-import time
+from django.db import connection
 
 
 class StockList(generics.ListCreateAPIView):
@@ -21,7 +18,6 @@ class StockDetail(generics.ListAPIView):
     serializer_class = StockSerializer 
     filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
-    # api = "http://prodigal-ml.azurewebsites.net/stocks/" 
     api = "http://127.0.0.1:8000/stocks/" 
 
     def get_queryset(self): 
@@ -41,29 +37,33 @@ class StockDetail(generics.ListAPIView):
 
                 my_tuples = [tuple(x.values()) for x in json_data]
                 cur.executemany(query, my_tuples)
-                # mdata = requests.get(self.api + ticker).json()
                 mdata = Stock.objects.filter(ticker=ticker)
                 return mdata
             else: 
                 raise Http404
 
+
 def run_experiment_return_results(request, ticker):
     """
-    Runs experiment module on request from API endpoint. Then, returns experiment results packed in json list.
+    Runs experiment module on request from API endpoint.
+    Then, returns experiment results packed in json list.
     :param request: Http request
     :param ticker: Ticker symbol passed from endpoint
     :return: JSON list of experiment results
     """
     results = ExperimentManager.run_experiment(ticker)
     if results == -1:
-        return JsonResponse({"result": "Error", "error": "Failed to find matching company"}, status=404)
+        return JsonResponse({"result": "Error",
+                             "error": "Failed to find matching company"},
+                            status=404)
     else:
         return JsonResponse(results, status=200, safe=False)
 
 
 def run_update(request, ticker):
     """
-    Runs update on specified ticker symbol on request from API endpoint. For daily update automation purpose.
+    Runs update on specified ticker symbol on request from API endpoint.
+    For daily update automation purpose.
     :param request: Http request
     :param ticker: Ticker symbol passed from endpoint
     :return: JSON response containing operation result.
@@ -72,14 +72,18 @@ def run_update(request, ticker):
     if result == 0:
         return JsonResponse({"result": "OK"}, status=200)
     elif result == 1:
-        return JsonResponse({"result": "Error", "error": "Record already exists"}, status=200)
+        return JsonResponse({"result": "Error",
+                             "error": "Record already exists"}, status=200)
     else:
-        return JsonResponse({"result": "Error", "error": "Failed to find matching company"}, status=404)
+        return JsonResponse({"result": "Error",
+                             "error": "Failed to find matching company"},
+                            status=404)
 
 
 def run_update_all(request):
     """
-    Runs update on all ticker symbols in database on request from API endpoint. For daily update automation purpose.
+    Runs update on all ticker symbols in database on request from API endpoint.
+    For daily update automation purpose.
     :param request: Http request
     :return: JSON response containing operation result on each ticker.
     """
