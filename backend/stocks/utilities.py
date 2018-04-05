@@ -108,10 +108,8 @@ class StockHistoryUpdater:
             status = StockHistoryUpdater.update_by_ticker(ticker)
             if status == 0:
                 return_dict[ticker] = "OK"
-            elif status == 1:
-                return_dict[ticker] = "Error: record already exists"
             else:
-                return_dict[ticker] = "Error: company not found in database"
+                return_dict[ticker] = "Error: record already exists"
         return return_dict
 
 

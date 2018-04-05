@@ -120,6 +120,28 @@ class ViewTestCase(TestCase):
         self.assertEqual(len(json_data), 100)
         self.assertEqual(json_data[0]['date'], str(latest_date_msft))
 
+    def test_update_all_existing(self):
+        # fill in stock data for 2 tickers
+        self.client.get('/stocks/AAPL?ordering=-date&format=json',
+                        follow=True)
+        self.client.get('/stocks/MSFT?ordering=-date&format=json',
+                        follow=True)
+        # delete latest data of AAPL
+        latest_obj = Stock.objects.filter(ticker='AAPL').latest('date')
+        latest_obj.delete()
+        oldest_obj_aapl = Stock.objects.filter(ticker='AAPL').earliest('date')
+        oldest_date_aapl = oldest_obj_aapl.date
+        # add dummy oldest data to be deleted upon call on update
+        dummy_date_aapl = oldest_date_aapl + datetime.timedelta(days=-1)
+        Stock.objects.create(ticker='AAPL', date=dummy_date_aapl, high=0,
+                             low=0, opening=0, closing=0, volume=100)
+        # call update endpoint
+        response = self.client.get('/stocks/update', follow=True)
+        self.assertEqual(response.status_code, 200)
+        json_data = response.json()
+        self.assertEqual(json_data['AAPL'], 'OK')
+        self.assertEqual(json_data['MSFT'], 'Error: record already exists')
+
 
 class CodeStyleTestCase(TestCase):
 
