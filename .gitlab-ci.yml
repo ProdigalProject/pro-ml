@@ -6,14 +6,15 @@ stages:
 
 before_script: 
     - apt-get update -qq 
-    - pip install -r backend/requirements.txt
+    - cd backend 
+    - pip install -r requirements.txt
 
 test: 
     stage: test
     only: 
         - test_ci 
     script: 
-        - coverage run backend/manage.py test stocks
+        - coverage run manage.py test stocks
         - coverage report
         - coverage html 
 
