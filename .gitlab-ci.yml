@@ -1,12 +1,17 @@
 image: python:3.6
 
 stages: 
+    - setup 
     - test
     - deploy
 
 before_script: 
     - apt-get update -qq 
-    - pip install -r requirements.txt 
+
+setup: 
+    stage: setup
+    script: 
+        - pip install -r requirements.txt 
 
 test: 
     stage: test
