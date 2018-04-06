@@ -6,6 +6,7 @@ stages:
 
 before_script: 
     - apt-get update -qq 
+    - find . -iname "manage.py"
     - pip install -r $(find `pwd` -iname "requirements.txt")
 
 test: 
