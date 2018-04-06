@@ -147,7 +147,7 @@ class CodeStyleTestCase(TestCase):
 
     def test_pep8(self):
         # ignore trailing whitespace warning
-        pep = pycodestyle.StyleGuide(ignore=['W291'])
+        pep = pycodestyle.StyleGuide()
         test_files = ['stocks/linear_regression.py', 'stocks/models.py',
                       'stocks/serializers.py', 'stocks/urls.py',
                       'stocks/utilities.py', 'stocks/views.py',

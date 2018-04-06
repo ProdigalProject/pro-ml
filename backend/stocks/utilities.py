@@ -21,7 +21,7 @@ class AlphaAPICaller:
         b_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
         b_url = b_url + "&symbol=" + ticker + "&apikey=" + self.api_key
         response = requests.get(b_url).json()
-        try: 
+        try:
             daily_dataset = response["Time Series (Daily)"]
             metadata = response["Meta Data"]
             latest_date = metadata["3. Last Refreshed"][:10]
@@ -47,7 +47,7 @@ class AlphaAPICaller:
                                          "history": json_result}
                 return json_result_with_meta
         except KeyError:
-            empty_list = [] 
+            empty_list = []
             return empty_list
 
 
@@ -68,18 +68,20 @@ class StockHistoryUpdater:
         :return: 0: success
                  1: record already exists
                  2: company not found in database
+                 -1: undefined error
         """
         if not Stock.objects.filter(ticker=ticker).exists():
             return 2
         api_response = AlphaAPICaller().get_compact_date(ticker, meta=True)
         # TODO: what happens if market not closed?????
-        last_refresh = api_response['latest_data']['date'][:10]
+        try:
+            last_refresh = api_response['latest_data']['date'][:10]
+        except TypeError:
+            return -1
         if Stock.objects.filter(ticker=ticker, date=last_refresh).exists():
-            print('record exists')
             return 1
         # Delete oldest entry
         oldest_obj = Stock.objects.filter(ticker=ticker).earliest('date')
-        print(oldest_obj.date)
         oldest_obj.delete()
         # Add to database using model or API
         json_data = api_response['latest_data']

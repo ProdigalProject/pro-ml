@@ -95,7 +95,6 @@ def return_prediction(ticker_symbol):
         reader_r = csv.reader(f, delimiter=',')
         next(reader_r)
         for index, line in enumerate(reader_r):
-            print("Input (open, high, low):", line[1], line[2], line[3])
             expr_result = float(p.predict_closing(float(line[1]),
                                                   float(line[2]),
                                                   float(line[3])))

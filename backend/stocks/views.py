@@ -10,26 +10,26 @@ from django.db import connection
 class StockList(generics.ListCreateAPIView):
     serializer_class = StockSerializer
     queryset = Stock.objects.all()
-    filter_backends = (OrderingFilter,) 
+    filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
 
 
 class StockDetail(generics.ListAPIView):
-    serializer_class = StockSerializer 
+    serializer_class = StockSerializer
     filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
-    api = "http://127.0.0.1:8000/stocks/" 
+    api = "http://127.0.0.1:8000/stocks/"
 
-    def get_queryset(self): 
+    def get_queryset(self):
         queryset = Stock.objects.filter(ticker=self.kwargs['ticker'])
-        if queryset: 
+        if queryset:
             return queryset
-        else: 
-            ticker = self.kwargs['ticker'] 
+        else:
+            ticker = self.kwargs['ticker']
             alpha = AlphaAPICaller()
             json_data = alpha.get_compact_date(ticker)
 
-            if len(json_data) > 0: 
+            if len(json_data) > 0:
                 cur = connection.cursor()
                 query = """INSERT INTO stocks_stock(ticker, high, low,\
                         opening, closing, volume, date)\
@@ -39,7 +39,7 @@ class StockDetail(generics.ListAPIView):
                 cur.executemany(query, my_tuples)
                 mdata = Stock.objects.filter(ticker=ticker)
                 return mdata
-            else: 
+            else:
                 raise Http404
 
 
@@ -74,6 +74,9 @@ def run_update(request, ticker):
     elif result == 1:
         return JsonResponse({"result": "Error",
                              "error": "Record already exists"}, status=200)
+    elif result == -1:
+        return JsonResponse({"result": "Error",
+                             "error": "Try again later"}, status=500)
     else:
         return JsonResponse({"result": "Error",
                              "error": "Failed to find matching company"},
