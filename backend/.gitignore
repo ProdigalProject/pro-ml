@@ -8,4 +8,3 @@ celerybeat-schedule.*
 *.csv
 # coverage files
 .coverage
-coverage_html_report
