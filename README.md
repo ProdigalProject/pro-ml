@@ -2,12 +2,14 @@
 
 ## Team Members
 * Gabrielle Chen
-* Jamie Paterson 
+* Wonwoo Seo
 * Htut Khine Win 
 
 ## Services
 * Provide REST API to prodigal webapp 
 
 ## webservice API endpoints
-GET   | /stocks/
-GET   | /stocks/[id]
+|REST  | ENDPOINT     | 
+|------|--------------|
+|GET   | /stocks/     |
+|GET   | /stocks/[id] | 
