@@ -1,17 +1,12 @@
 image: python:3.6
 
 stages: 
-    - setup 
     - test
     - deploy
 
 before_script: 
     - apt-get update -qq 
-
-setup: 
-    stage: setup
-    script: 
-        - pip install -r requirements.txt 
+    - pip install -r $(find `pwd` -iname "requirements.txt")
 
 test: 
     stage: test
