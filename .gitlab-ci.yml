@@ -1,23 +1,26 @@
-before_script: 
-    - export PATH=$PATH:/usr/local/bin:/home/gitlab-runner/python/bin
-    - pip3 install pytest Django==2.0.2 djangorestframework mysqlclient
+image: python:3.6
 
 stages: 
-    - build
     - test
     - deploy
 
-job_test1: 
+before_script: 
+    - apt-get update -qq 
+    - pip install -r requirements.txt 
+
+test: 
     stage: test
     only: 
-        - master
-    script:
-        - cd /home/gitlab-runner/builds/924d7679/0/prodigal/pro-ml/backend
-        - python3 manage.py test
+        - master 
+    script: 
+        - coverage run manage.py test stocks
+        - coverage report
+        - coverage html 
 
-job_deploy: 
+deploy: 
     stage: deploy
     only: 
-        - master
-    script:
-        - cd /home/gitlab-runner/builds/924d7679/0/prodigal/pro-ml/backend
+        - master 
+    script: 
+        - pip install azure-cli 
+        - echo -e "[INFO] Currently testing out with docker deploy." 
