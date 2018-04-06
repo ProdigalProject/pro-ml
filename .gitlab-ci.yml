@@ -6,9 +6,6 @@ stages:
 
 before_script: 
     - apt-get update -qq 
-    - mkdir /app && cd /app/ 
-    - git clone https://gitlab.engr.illinois.edu/prodigal/pro-ml.git
-    - cd pro-ml/backend
     - pip install -r requirements.txt 
 
 test: 
