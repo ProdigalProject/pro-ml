@@ -11,19 +11,20 @@ class AlphaAPICaller:
 
     def get_compact_date(self, ticker, meta=False):
         """
-        Calls AlphaVantage API on given ticker, gets compact (100) history data and returns formatted json.
-        If meta=True, result will contain metadata of call to AlphaVantage API and list of result data.
+        Calls AlphaVantage API on given ticker, gets compact (100) history data
+        and returns formatted json. If meta=True, result will contain metadata
+        of call to AlphaVantage API and list of result data.
         :param ticker: Ticker symbol to get history results
-        :param meta: (Optional) Option to attach metadata on result. Default: False
-        :return: Returns metadata with history data on True, only history data if False.
+        :param meta: (Optional) Option to attach metadata on result.
+        :return: Returns metadata with history or just history.
         """
-        base_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
-        base_url = base_url + "&symbol=" + ticker + "&apikey=" + self.api_key
-        response = requests.get(base_url).json()
-        try: 
+        b_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
+        b_url = b_url + "&symbol=" + ticker + "&apikey=" + self.api_key
+        response = requests.get(b_url).json()
+        try:
             daily_dataset = response["Time Series (Daily)"]
             metadata = response["Meta Data"]
-            latest_date = metadata["3. Last Refreshed"]
+            latest_date = metadata["3. Last Refreshed"][:10]
             json_result = []
             latest_history = None
             for date, stock_data in daily_dataset.items():
@@ -41,69 +42,76 @@ class AlphaAPICaller:
                     latest_history = api_data
             if not meta:
                 return json_result
-            else:  # if meta=True, return data of latest date as separate attribute
-                json_result_with_meta = {"latest_data": latest_history, "history": json_result}
+            else:  # return data of latest date as separate attribute
+                json_result_with_meta = {"latest_data": latest_history,
+                                         "history": json_result}
                 return json_result_with_meta
-        except: 
-            empty_list = [] 
+        except KeyError:
+            empty_list = []
             return empty_list
 
 
 class StockHistoryUpdater:
     """
-    Utility class to manage updates of history data on database. Update on stock history should occur daily,
+    Utility class to manage updates of history data on database.
+    Update on stock history should occur daily,
     ideally after market closes.
     """
     @staticmethod
     def update_by_ticker(ticker):
         """
-        Get recent stock data of given ticker from AlphaVantage API and POSTs latest data to database, then DELETEs
-        oldest data from database.
-        Fails if company doesn't exist in database or record for current date exists.
+        Get recent stock data of given ticker from AlphaVantage API and POSTs
+        latest data to database, then DELETEs oldest data from database.
+        Fails if company doesn't exist in database or record for current
+        date exists.
         :param ticker: Ticker symbol to update data
-        :return: 0: success, 1: record already exists, 2: company not found in database
+        :return: 0: success
+                 1: record already exists
+                 2: company not found in database
+                 -1: undefined error
         """
-        if not Stock.objects.filter(ticker=ticker).exists():  # company not in database
+        if not Stock.objects.filter(ticker=ticker).exists():
             return 2
         api_response = AlphaAPICaller().get_compact_date(ticker, meta=True)
-        last_refresh = api_response['latest_data']['date'][:10]  # TODO: what happens if market not closed?????
+        # TODO: what happens if market not closed?????
         try:
-            Stock.objects.get(ticker=ticker, date=last_refresh)
-            print('record exists')
+            last_refresh = api_response['latest_data']['date'][:10]
+        except TypeError:
+            return -1
+        if Stock.objects.filter(ticker=ticker, date=last_refresh).exists():
             return 1
-        except Stock.DoesNotExist:
-            # Delete oldest entry
-            oldest_obj = Stock.objects.get(ticker=ticker).earliest('date')
-            print(oldest_obj.date)
-            oldest_obj.delete()
-            # Add to database using model or API
-            json_data = api_response['latest_data']
-            new_entry = Stock(ticker=json_data['ticker'], opening=json_data['opening'],
-                              high=json_data['high'], low=json_data['low'], closing=json_data['closing'],
-                              volume=json_data['volume'], date=json_data['date'])
-            new_entry.save()
-            # requests.post("http://127.0.0.1:8000/stocks/", data=json_data)
-            return 0
+        # Delete oldest entry
+        oldest_obj = Stock.objects.filter(ticker=ticker).earliest('date')
+        oldest_obj.delete()
+        # Add to database using model or API
+        json_data = api_response['latest_data']
+        new_entry = Stock(ticker=json_data['ticker'],
+                          opening=json_data['opening'],
+                          high=json_data['high'], low=json_data['low'],
+                          closing=json_data['closing'],
+                          volume=json_data['volume'], date=json_data['date'])
+        new_entry.save()
+        return 0
 
     @staticmethod
     def update_all():
         """
-        Updates stock data for all companies in database using Stock.update_by_ticker function.
+        Updates stock data for all companies in database using
+        Stock.update_by_ticker function.
         :return: Operation result of update on each ticker
         """
         ticker_list = []
         return_dict = {}
-        company_obj_all = Stock.objects.values_list('ticker', flat=True).distinct()  # get all tickers in database
+        company_obj_all = Stock.objects.values_list('ticker', flat=True)
+        company_obj_all = company_obj_all.distinct()  # get all tickers
         for company in company_obj_all:
             ticker_list.append(company)
         for ticker in ticker_list:
             status = StockHistoryUpdater.update_by_ticker(ticker)
             if status == 0:
                 return_dict[ticker] = "OK"
-            elif status == 1:
-                return_dict[ticker] = "Error: record already exists"
             else:
-                return_dict[ticker] = "Error: company not found in database"
+                return_dict[ticker] = "Error: record already exists"
         return return_dict
 
 
@@ -114,12 +122,14 @@ class ExperimentManager:
     @staticmethod
     def run_experiment(ticker):
         """
-        Run experiment for given ticker and returns list of experiment results packed in JSON format.
+        Run experiment for given ticker and returns list of experiment results
+        packed in JSON format.
         Fails if company doesn't exist in database.
         :param ticker: Ticker symbol to run experiment
-        :return: JSON containing list of experiment results. -1 if company is not found in database.
+        :return: JSON containing list of experiment results.
+                 -1 if company is not found in database.
         """
-        if not Stock.objects.filter(ticker=ticker).exists():  # company not in database
+        if not Stock.objects.filter(ticker=ticker).exists():
             return -1
         expr_result = predictor.return_prediction(ticker)
         results = []

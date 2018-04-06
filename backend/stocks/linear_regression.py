@@ -1,33 +1,38 @@
 # for converting json to csv
 import csv
 # for linear regression model
+from stocks.models import Stock
+from stocks.serializers import StockSerializer
 import pandas as pd
-import requests
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
 
 class Predictor:
     """
-    Class to run linear regression experiment and predict closing value from given data of open, close, high, low and
-    volume.
+    Class to run linear regression experiment and predict closing value from
+    given data of open, close, high, low and volume.
     """
     @staticmethod
     def get_json(ticker_symbol):
         """
-        Gets history data of given ticker from API and returns them in JSON file object.
+        Gets history data of given ticker from API and returns them in
+        JSON file object.
         :param ticker_symbol: Ticker to get data
         :return: JSON file object of history of given ticker
         """
-        data_url = ("http://127.0.0.1:8000/stocks/" + ticker_symbol + "/?ordering=-date&format=json")
-        file = requests.get(url=data_url)
-        json_file = file.json()
+        s_data = Stock.objects.filter(ticker=ticker_symbol).order_by('-date')
+        json_file = []
+        for data in s_data:
+            json_obj = StockSerializer(data).data
+            json_file.append(json_obj)
         return json_file
 
     @staticmethod
     def create_csv(json_file):
         """
-        Creates csv file to feed in to prediction model from given JSON file object.
+        Creates csv file to feed in to prediction model from given JSON file
+        object.
         :param json_file: JSON file object from get_json function.
         :return: No return value.
         """
@@ -42,13 +47,15 @@ class Predictor:
                 low_price = data["low"]
                 close_price = data["closing"]
                 volume = data["volume"]
-                filewriter.writerow([timestamp, open_price, high_price, low_price, close_price, volume])
+                filewriter.writerow([timestamp, open_price, high_price,
+                                     low_price, close_price, volume])
 
     @staticmethod
     def predict_closing(open_price, high_price, low_price):
         """
-        Predicts closing value from previous open, high, low data using linear regression model.
-        70% of history data is used for training, 30% for testing.
+        Predicts closing value from previous open, high, low data using linear
+        regression model. 70% of history data is used for training,
+        30% for testing.
         :param open_price: open value to be used on prediction
         :param high_price: high value to be used on prediction
         :param low_price: low value to be used on prediction
@@ -59,10 +66,11 @@ class Predictor:
         x = data[["open", "high", "low"]]
         y = data["close"]
 
-        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0)
+        x_train, x_test, y_train, y_test = train_test_split(x, y,
+                                                            test_size=0.3,
+                                                            random_state=0)
         model = LinearRegression()
         model.fit(x_train, y_train)
-        y_pred = model.predict(x_test)
 
         pred = model.predict([[open_price, high_price, low_price]])
         for i in pred:
@@ -72,7 +80,8 @@ class Predictor:
 
 def return_prediction(ticker_symbol):
     """
-    Runs prediction model on given ticker 5 times recursively, and return prediction results for next 5 days.
+    Runs prediction model on given ticker 5 times recursively, and return
+    prediction results for next 5 days.
     :param ticker_symbol: Ticker to run experiment on
     :return: List of prediction results.
     """
@@ -86,8 +95,9 @@ def return_prediction(ticker_symbol):
         reader_r = csv.reader(f, delimiter=',')
         next(reader_r)
         for index, line in enumerate(reader_r):
-            print("Input (open, high, low):", line[1], line[2], line[3])
-            expr_result = float(p.predict_closing(float(line[1]), float(line[2]), float(line[3])))
+            expr_result = float(p.predict_closing(float(line[1]),
+                                                  float(line[2]),
+                                                  float(line[3])))
             predictions.insert(index, expr_result)
             if index >= 4:
                 break
@@ -97,7 +107,8 @@ def return_prediction(ticker_symbol):
 
 def main():
     """
-    Kept to test predictor as stand-alone. Don't call this function from other module!
+    Kept to test predictor as stand-alone.
+    Don't call this function from other module!
     :return: No return value.
     """
     predictions = return_prediction("AAPL")

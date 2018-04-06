@@ -12,28 +12,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Company',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('ticker', models.CharField(max_length=50)),
-                ('company_name', models.CharField(max_length=100, unique=True)),
-                ('exchange', models.CharField(max_length=100)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Prediction',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('ticker', models.CharField(max_length=50)),
-                ('prediction', models.FloatField(blank=True, default=0)),
-                ('date_ran_experiment', models.DateField(blank=True, null=True)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Stock',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
                 ('ticker', models.CharField(max_length=50)),
                 ('high', models.FloatField(blank=True, default=0)),
                 ('low', models.FloatField(blank=True, default=0)),
