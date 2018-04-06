@@ -6,15 +6,14 @@ stages:
 
 before_script: 
     - apt-get update -qq 
-    - find . -iname "manage.py"
-    - pip install -r $(find `pwd` -iname "requirements.txt")
+    - pip install -r backend/requirements.txt
 
 test: 
     stage: test
     only: 
         - test_ci 
     script: 
-        - coverage run $(find `pwd` -iname "manage.py") test stocks
+        - coverage run backend/manage.py test stocks
         - coverage report
         - coverage html 
 
