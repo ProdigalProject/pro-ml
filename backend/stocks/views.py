@@ -7,6 +7,10 @@ from .utilities import StockHistoryUpdater, ExperimentManager, AlphaAPICaller
 from django.db import connection
 
 
+global_key = 'prodigal'
+# 'a18c144ec62286043eeb008b156fa5d0216778878cf5317f4891ded29cd59d67'
+
+
 class StockList(generics.ListCreateAPIView):
     serializer_class = StockSerializer
     queryset = Stock.objects.all()
@@ -43,6 +47,25 @@ class StockDetail(generics.ListAPIView):
                 raise Http404
 
 
+def view_all_stocks(request):
+    key = request.GET.get('apikey', '')
+    if key != global_key:
+        return JsonResponse({"result": "Error",
+                             "error": "Please provide valid API key."},
+                            status=401)
+    sc = StockList()
+    return sc.as_view()
+
+
+def view_stock_detail(request, ticker):
+    key = request.GET.get('apikey', '')
+    if key != global_key:
+        return JsonResponse({"result": "Error",
+                             "error": "Please provide valid API key."},
+                            status=401)
+    return StockDetail.as_view()
+
+
 def run_experiment_return_results(request, ticker):
     """
     Runs experiment module on request from API endpoint.
@@ -51,6 +74,11 @@ def run_experiment_return_results(request, ticker):
     :param ticker: Ticker symbol passed from endpoint
     :return: JSON list of experiment results
     """
+    key = request.GET.get('apikey', '')
+    if key != global_key:
+        return JsonResponse({"result": "Error",
+                             "error": "Please provide valid API key."},
+                            status=401)
     results = ExperimentManager.run_experiment(ticker)
     if results == -1:
         return JsonResponse({"result": "Error",
@@ -68,6 +96,11 @@ def run_update(request, ticker):
     :param ticker: Ticker symbol passed from endpoint
     :return: JSON response containing operation result.
     """
+    key = request.GET.get('apikey', '')
+    if key != global_key:
+        return JsonResponse({"result": "Error",
+                             "error": "Please provide valid API key."},
+                            status=401)
     result = StockHistoryUpdater.update_by_ticker(ticker)
     if result == 0:
         return JsonResponse({"result": "OK"}, status=200)
@@ -90,5 +123,10 @@ def run_update_all(request):
     :param request: Http request
     :return: JSON response containing operation result on each ticker.
     """
+    key = request.GET.get('apikey', '')
+    if key != global_key:
+        return JsonResponse({"result": "Error",
+                             "error": "Please provide valid API key."},
+                            status=401)
     result = StockHistoryUpdater.update_all()
     return JsonResponse(result, status=200)
