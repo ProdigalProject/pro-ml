@@ -2,20 +2,27 @@ from stocks.models import Stock
 from stocks.serializers import StockSerializer
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
+from rest_framework.exceptions import AuthenticationFailed, NotAuthenticated
 from django.http import Http404, JsonResponse
 from .utilities import StockHistoryUpdater, ExperimentManager, AlphaAPICaller
 from django.db import connection
 
 
-global_key = 'prodigal'
-# 'a18c144ec62286043eeb008b156fa5d0216778878cf5317f4891ded29cd59d67'
+global_key = 'cHJvZGlnYWxfYXBwX2FwaV9rZXk='
 
 
 class StockList(generics.ListCreateAPIView):
     serializer_class = StockSerializer
-    queryset = Stock.objects.all()
     filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
+
+    def get_queryset(self):
+        key_query = self.request.query_params.get('apikey')
+        if key_query is None:
+            raise NotAuthenticated
+        elif key_query != global_key:
+            raise AuthenticationFailed
+        return Stock.objects.all()
 
 
 class StockDetail(generics.ListAPIView):
@@ -25,6 +32,11 @@ class StockDetail(generics.ListAPIView):
     api = "http://127.0.0.1:8000/stocks/"
 
     def get_queryset(self):
+        key_query = self.request.query_params.get('apikey')
+        if key_query is None:
+            raise NotAuthenticated
+        elif key_query != global_key:
+            raise AuthenticationFailed
         queryset = Stock.objects.filter(ticker=self.kwargs['ticker'])
         if queryset:
             return queryset
@@ -45,25 +57,6 @@ class StockDetail(generics.ListAPIView):
                 return mdata
             else:
                 raise Http404
-
-
-def view_all_stocks(request):
-    key = request.GET.get('apikey', '')
-    if key != global_key:
-        return JsonResponse({"result": "Error",
-                             "error": "Please provide valid API key."},
-                            status=401)
-    sc = StockList()
-    return sc.as_view()
-
-
-def view_stock_detail(request, ticker):
-    key = request.GET.get('apikey', '')
-    if key != global_key:
-        return JsonResponse({"result": "Error",
-                             "error": "Please provide valid API key."},
-                            status=401)
-    return StockDetail.as_view()
 
 
 def run_experiment_return_results(request, ticker):
