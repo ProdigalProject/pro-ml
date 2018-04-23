@@ -2,7 +2,7 @@ from stocks.models import Stock
 from stocks.serializers import StockSerializer
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
-from rest_framework.exceptions import AuthenticationFailed, NotAuthenticated
+from rest_framework.exceptions import AuthenticationFailed
 from django.http import Http404, JsonResponse
 from .utilities import StockHistoryUpdater, ExperimentManager, AlphaAPICaller
 from django.db import connection
@@ -19,7 +19,7 @@ class StockList(generics.ListCreateAPIView):
     def get_queryset(self):
         key_query = self.request.query_params.get('apikey')
         if key_query is None:
-            raise NotAuthenticated
+            raise AuthenticationFailed
         elif key_query != global_key:
             raise AuthenticationFailed
         return Stock.objects.all()
@@ -34,7 +34,7 @@ class StockDetail(generics.ListAPIView):
     def get_queryset(self):
         key_query = self.request.query_params.get('apikey')
         if key_query is None:
-            raise NotAuthenticated
+            raise AuthenticationFailed
         elif key_query != global_key:
             raise AuthenticationFailed
         queryset = Stock.objects.filter(ticker=self.kwargs['ticker'])
@@ -70,7 +70,7 @@ def run_experiment_return_results(request, ticker):
     if key != global_key:
         return JsonResponse({"result": "Error",
                              "error": "Please provide valid API key."},
-                            status=401)
+                            status=403)
     results = ExperimentManager.run_experiment(ticker)
     if results == -1:
         return JsonResponse({"result": "Error",
@@ -92,7 +92,7 @@ def run_update(request, ticker):
     if key != global_key:
         return JsonResponse({"result": "Error",
                              "error": "Please provide valid API key."},
-                            status=401)
+                            status=403)
     result = StockHistoryUpdater.update_by_ticker(ticker)
     if result == 0:
         return JsonResponse({"result": "OK"}, status=200)
@@ -119,6 +119,6 @@ def run_update_all(request):
     if key != global_key:
         return JsonResponse({"result": "Error",
                              "error": "Please provide valid API key."},
-                            status=401)
+                            status=403)
     result = StockHistoryUpdater.update_all()
     return JsonResponse(result, status=200)
