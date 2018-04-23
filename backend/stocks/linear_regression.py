@@ -103,17 +103,3 @@ def return_prediction(ticker_symbol):
                 break
 
     return predictions
-
-
-def main():
-    """
-    Kept to test predictor as stand-alone.
-    Don't call this function from other module!
-    :return: No return value.
-    """
-    predictions = return_prediction("AAPL")
-    print(predictions)
-
-
-if __name__ == "__main__":
-    main()

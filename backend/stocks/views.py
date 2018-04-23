@@ -50,7 +50,6 @@ class StockDetail(generics.ListAPIView):
                 query = """INSERT INTO stocks_stock(ticker, high, low,\
                         opening, closing, volume, date)\
                         VALUES (%s, %s, %s, %s, %s, %s, %s)"""
-
                 my_tuples = [tuple(x.values()) for x in json_data]
                 cur.executemany(query, my_tuples)
                 mdata = Stock.objects.filter(ticker=ticker)
