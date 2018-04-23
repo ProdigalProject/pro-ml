@@ -29,7 +29,6 @@ class AlphaAPICaller:
             latest_history = None
             for date, stock_data in daily_dataset.items():
                 api_data = dict()
-                # not returning name anymore
                 api_data["ticker"] = ticker
                 api_data["opening"] = stock_data["1. open"]
                 api_data["high"] = stock_data["2. high"]
@@ -73,7 +72,6 @@ class StockHistoryUpdater:
         if not Stock.objects.filter(ticker=ticker).exists():
             return 2
         api_response = AlphaAPICaller().get_compact_date(ticker, meta=True)
-        # TODO: what happens if market not closed?????
         try:
             last_refresh = api_response['latest_data']['date'][:10]
         except TypeError:

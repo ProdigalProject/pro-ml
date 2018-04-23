@@ -11,6 +11,8 @@ before_script:
 
 test: 
     stage: test
+    only:
+        - master
     script: 
         - coverage run manage.py test stocks
         - coverage report
@@ -18,6 +20,8 @@ test:
 
 deploy: 
     stage: deploy
+    only:
+        - master
     script: 
         - pip install azure-cli 
         - echo -e "[INFO] Currently testing out with docker deploy." 
