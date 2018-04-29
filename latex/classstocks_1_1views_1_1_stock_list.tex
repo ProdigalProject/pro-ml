@@ -1,0 +1,49 @@
+\hypertarget{classstocks_1_1views_1_1_stock_list}{}\section{stocks.\+views.\+Stock\+List Class Reference}
+\label{classstocks_1_1views_1_1_stock_list}\index{stocks.\+views.\+Stock\+List@{stocks.\+views.\+Stock\+List}}
+Inheritance diagram for stocks.\+views.\+Stock\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classstocks_1_1views_1_1_stock_list}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classstocks_1_1views_1_1_stock_list_a59e9ccb2be0430bbeef05167009e40c3}{get\+\_\+queryset}} (self)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classstocks_1_1views_1_1_stock_list_ab607663b56d4ef0e78f97b695b369726}\label{classstocks_1_1views_1_1_stock_list_ab607663b56d4ef0e78f97b695b369726}} 
+{\bfseries serializer\+\_\+class} = \mbox{\hyperlink{classstocks_1_1serializers_1_1_stock_serializer}{Stock\+Serializer}}
+\item 
+\mbox{\Hypertarget{classstocks_1_1views_1_1_stock_list_a5760e75d23a65adac016fa30b93af9e4}\label{classstocks_1_1views_1_1_stock_list_a5760e75d23a65adac016fa30b93af9e4}} 
+tuple {\bfseries filter\+\_\+backends} = (Ordering\+Filter,)
+\item 
+\mbox{\Hypertarget{classstocks_1_1views_1_1_stock_list_a89797d122ada805421dcf12b2b4b680f}\label{classstocks_1_1views_1_1_stock_list_a89797d122ada805421dcf12b2b4b680f}} 
+tuple {\bfseries ordering\+\_\+fields} = (\textquotesingle{}date\textquotesingle{},)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This class create view of all stock data in database, ordered by date.
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classstocks_1_1views_1_1_stock_list_a59e9ccb2be0430bbeef05167009e40c3}\label{classstocks_1_1views_1_1_stock_list_a59e9ccb2be0430bbeef05167009e40c3}} 
+\index{stocks\+::views\+::\+Stock\+List@{stocks\+::views\+::\+Stock\+List}!get\+\_\+queryset@{get\+\_\+queryset}}
+\index{get\+\_\+queryset@{get\+\_\+queryset}!stocks\+::views\+::\+Stock\+List@{stocks\+::views\+::\+Stock\+List}}
+\subsubsection{\texorpdfstring{get\+\_\+queryset()}{get\_queryset()}}
+{\footnotesize\ttfamily def stocks.\+views.\+Stock\+List.\+get\+\_\+queryset (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Override to check api key before getting queryset. Raises exception
+if api key is not found in url parameters.
+:return: AuthenticationFailed if no api key is provided,
+ otherwise queryset of all stock data in database
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+backend/stocks/views.\+py\end{DoxyCompactItemize}

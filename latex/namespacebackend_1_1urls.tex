@@ -1,0 +1,41 @@
+\hypertarget{namespacebackend_1_1urls}{}\section{backend.\+urls Namespace Reference}
+\label{namespacebackend_1_1urls}\index{backend.\+urls@{backend.\+urls}}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list {\bfseries urlpatterns}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}backend URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+https://docs.djangoproject.com/en/2.0/topics/http/urls/
+Examples:
+Function views
+1. Add an import:  from my_app import views
+2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+1. Add an import:  from other_app.views import Home
+2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+1. Import the include() function: from django.urls import include, path
+2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+\end{DoxyVerb}
+ 
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{namespacebackend_1_1urls_acd5289136b849114d0d146559249a2b9}\label{namespacebackend_1_1urls_acd5289136b849114d0d146559249a2b9}} 
+\index{backend\+::urls@{backend\+::urls}!urlpatterns@{urlpatterns}}
+\index{urlpatterns@{urlpatterns}!backend\+::urls@{backend\+::urls}}
+\subsubsection{\texorpdfstring{urlpatterns}{urlpatterns}}
+{\footnotesize\ttfamily list backend.\+urls.\+urlpatterns}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 =  [
+2     \textcolor{comment}{# path('admin/', admin.site.urls),}
+3     url(\textcolor{stringliteral}{r"^"}, include(\textcolor{stringliteral}{"stocks.urls"})),
+4 ]
+\end{DoxyCode}

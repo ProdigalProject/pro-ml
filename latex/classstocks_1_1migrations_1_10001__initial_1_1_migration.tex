@@ -1,0 +1,62 @@
+\hypertarget{classstocks_1_1migrations_1_10001__initial_1_1_migration}{}\section{stocks.\+migrations.0001\+\_\+initial.Migration Class Reference}
+\label{classstocks_1_1migrations_1_10001__initial_1_1_migration}\index{stocks.\+migrations.\+0001\+\_\+initial.\+Migration@{stocks.\+migrations.\+0001\+\_\+initial.\+Migration}}
+Inheritance diagram for stocks.\+migrations.0001\+\_\+initial.Migration\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classstocks_1_1migrations_1_10001__initial_1_1_migration}
+\end{center}
+\end{figure}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classstocks_1_1migrations_1_10001__initial_1_1_migration_afc1023a8bab2daff2911fe5db9cba6aa}\label{classstocks_1_1migrations_1_10001__initial_1_1_migration_afc1023a8bab2daff2911fe5db9cba6aa}} 
+bool {\bfseries initial} = True
+\item 
+list {\bfseries dependencies}
+\item 
+list {\bfseries operations}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classstocks_1_1migrations_1_10001__initial_1_1_migration_a816085cec6cdb4a96f07c835b9dc5c1e}\label{classstocks_1_1migrations_1_10001__initial_1_1_migration_a816085cec6cdb4a96f07c835b9dc5c1e}} 
+\index{stocks\+::migrations\+::0001\+\_\+initial\+::\+Migration@{stocks\+::migrations\+::0001\+\_\+initial\+::\+Migration}!dependencies@{dependencies}}
+\index{dependencies@{dependencies}!stocks\+::migrations\+::0001\+\_\+initial\+::\+Migration@{stocks\+::migrations\+::0001\+\_\+initial\+::\+Migration}}
+\subsubsection{\texorpdfstring{dependencies}{dependencies}}
+{\footnotesize\ttfamily list stocks.\+migrations.\+0001\+\_\+initial.\+Migration.\+dependencies\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  [
+    ]
+\end{DoxyCode}
+\mbox{\Hypertarget{classstocks_1_1migrations_1_10001__initial_1_1_migration_ad7876765d8e1c6ddc79df3f27a4e6901}\label{classstocks_1_1migrations_1_10001__initial_1_1_migration_ad7876765d8e1c6ddc79df3f27a4e6901}} 
+\index{stocks\+::migrations\+::0001\+\_\+initial\+::\+Migration@{stocks\+::migrations\+::0001\+\_\+initial\+::\+Migration}!operations@{operations}}
+\index{operations@{operations}!stocks\+::migrations\+::0001\+\_\+initial\+::\+Migration@{stocks\+::migrations\+::0001\+\_\+initial\+::\+Migration}}
+\subsubsection{\texorpdfstring{operations}{operations}}
+{\footnotesize\ttfamily list stocks.\+migrations.\+0001\+\_\+initial.\+Migration.\+operations\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  [
+        migrations.CreateModel(
+            name=\textcolor{stringliteral}{'Stock'},
+            fields=[
+                (\textcolor{stringliteral}{'id'}, models.AutoField(auto\_created=\textcolor{keyword}{True}, primary\_key=\textcolor{keyword}{True}, serialize=\textcolor{keyword}{False}, verbose\_name=\textcolor{stringliteral}{
+      'ID'})),
+                (\textcolor{stringliteral}{'ticker'}, models.CharField(max\_length=50)),
+                (\textcolor{stringliteral}{'high'}, models.FloatField(blank=\textcolor{keyword}{True}, default=0)),
+                (\textcolor{stringliteral}{'low'}, models.FloatField(blank=\textcolor{keyword}{True}, default=0)),
+                (\textcolor{stringliteral}{'opening'}, models.FloatField(blank=\textcolor{keyword}{True}, default=0)),
+                (\textcolor{stringliteral}{'closing'}, models.FloatField(blank=\textcolor{keyword}{True}, default=0)),
+                (\textcolor{stringliteral}{'volume'}, models.IntegerField(blank=\textcolor{keyword}{True}, default=0)),
+                (\textcolor{stringliteral}{'date'}, models.DateField(blank=\textcolor{keyword}{True}, null=\textcolor{keyword}{True})),
+            ],
+        ),
+    ]
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+backend/stocks/migrations/0001\+\_\+initial.\+py\end{DoxyCompactItemize}

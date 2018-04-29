@@ -1,0 +1,116 @@
+\hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices}{}\section{data\+\_\+mine.\+Mine\+Stock\+Prices.\+Mine\+Stock\+Prices Class Reference}
+\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices}\index{data\+\_\+mine.\+Mine\+Stock\+Prices.\+Mine\+Stock\+Prices@{data\+\_\+mine.\+Mine\+Stock\+Prices.\+Mine\+Stock\+Prices}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a9451b88181645b907f525b9ed63f65b0}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a079e6738aef24fb09b5c23a1b97e97f4}{get\+\_\+response\+\_\+from\+\_\+api}} (self, function, search\+\_\+term, datatype=\char`\"{}json\char`\"{}, interval=None)
+\item 
+def \mbox{\hyperlink{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a9b73eb16d981aa9ebb8f2bdfbd3084cc}{get\+\_\+intraday\+\_\+stocks}} (self, search\+\_\+term, interval=\char`\"{}15min\char`\"{})
+\item 
+def \mbox{\hyperlink{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a4b892c0fb91e6bfd57e58bd0afae29f0}{get\+\_\+daily\+\_\+stocks}} (self, search\+\_\+term)
+\item 
+def \mbox{\hyperlink{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a98f05c73f0e1d30d16d42eb7510d60de}{get\+\_\+weekly\+\_\+stocks}} (self, search\+\_\+term, datatype)
+\item 
+def \mbox{\hyperlink{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a4e1c7514206e1ea659893e630a3e3ce7}{get\+\_\+monthly\+\_\+stocks}} (self, search\+\_\+term)
+\item 
+\mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a6ed118f8260ea93e1c4667f725b53855}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a6ed118f8260ea93e1c4667f725b53855}} 
+def {\bfseries get\+\_\+intraday\+\_\+cryptos} (self)
+\item 
+\mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a11108962a4b8b0c1853d4887e9d0d485}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a11108962a4b8b0c1853d4887e9d0d485}} 
+def {\bfseries get\+\_\+daily\+\_\+cryptos} (self)
+\item 
+\mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a4c344c50b861530252a3dd75a27696c1}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a4c344c50b861530252a3dd75a27696c1}} 
+def {\bfseries get\+\_\+weekly\+\_\+cryptos} (self)
+\item 
+\mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_ab766380a3f24e5adfe8127fd2a3be6a0}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_ab766380a3f24e5adfe8127fd2a3be6a0}} 
+def {\bfseries get\+\_\+monthly\+\_\+cryptos} (self)
+\item 
+\mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a9639ea8ba431172f48d3065455a32193}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a9639ea8ba431172f48d3065455a32193}} 
+def {\bfseries write\+\_\+each\+\_\+ticker\+\_\+to\+\_\+file} (self)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}    MineStockPrices is the class used to pull stock prices data from API.
+    Currently using alphavantage.co API to pull data.
+    Supports intraday, daily, weekly and monthly prices of tickers.
+    Can extend into cryptocurrencies in the future.
+\end{DoxyVerb}
+ 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a9451b88181645b907f525b9ed63f65b0}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a9451b88181645b907f525b9ed63f65b0}} 
+\index{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def data\+\_\+mine.\+Mine\+Stock\+Prices.\+Mine\+Stock\+Prices.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}    Constructor for MineStockPrices.
+    Initializes two instance variables.
+    _api_key: API token for alphavantage.co
+    _base_url: Base URL to call alaphavantage API
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a4b892c0fb91e6bfd57e58bd0afae29f0}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a4b892c0fb91e6bfd57e58bd0afae29f0}} 
+\index{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}!get\+\_\+daily\+\_\+stocks@{get\+\_\+daily\+\_\+stocks}}
+\index{get\+\_\+daily\+\_\+stocks@{get\+\_\+daily\+\_\+stocks}!data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}}
+\subsubsection{\texorpdfstring{get\+\_\+daily\+\_\+stocks()}{get\_daily\_stocks()}}
+{\footnotesize\ttfamily def data\+\_\+mine.\+Mine\+Stock\+Prices.\+Mine\+Stock\+Prices.\+get\+\_\+daily\+\_\+stocks (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{search\+\_\+term }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}    Get stock prices of a company daily.
+    Default number of entries returned is latest 100 data points.
+    Default return format is JSON.
+    search_term: ticker symbol to search for stock prices
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a9b73eb16d981aa9ebb8f2bdfbd3084cc}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a9b73eb16d981aa9ebb8f2bdfbd3084cc}} 
+\index{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}!get\+\_\+intraday\+\_\+stocks@{get\+\_\+intraday\+\_\+stocks}}
+\index{get\+\_\+intraday\+\_\+stocks@{get\+\_\+intraday\+\_\+stocks}!data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}}
+\subsubsection{\texorpdfstring{get\+\_\+intraday\+\_\+stocks()}{get\_intraday\_stocks()}}
+{\footnotesize\ttfamily def data\+\_\+mine.\+Mine\+Stock\+Prices.\+Mine\+Stock\+Prices.\+get\+\_\+intraday\+\_\+stocks (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{search\+\_\+term,  }\item[{}]{interval = {\ttfamily \char`\"{}15min\char`\"{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}    Get stock prices of a paricular company within one day.
+    Default time interval between each API pull is 15 minutes.
+    Default return format is JSON.
+    search_term: ticker symbol to search for stock prices
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a4e1c7514206e1ea659893e630a3e3ce7}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a4e1c7514206e1ea659893e630a3e3ce7}} 
+\index{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}!get\+\_\+monthly\+\_\+stocks@{get\+\_\+monthly\+\_\+stocks}}
+\index{get\+\_\+monthly\+\_\+stocks@{get\+\_\+monthly\+\_\+stocks}!data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}}
+\subsubsection{\texorpdfstring{get\+\_\+monthly\+\_\+stocks()}{get\_monthly\_stocks()}}
+{\footnotesize\ttfamily def data\+\_\+mine.\+Mine\+Stock\+Prices.\+Mine\+Stock\+Prices.\+get\+\_\+monthly\+\_\+stocks (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{search\+\_\+term }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}    Get stock prices of a company monthly.
+    Default number of entries returned is latest 100 data points.
+    Default return format is JSON.
+    search_term: ticker symbol to search for stock prices
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a079e6738aef24fb09b5c23a1b97e97f4}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a079e6738aef24fb09b5c23a1b97e97f4}} 
+\index{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}!get\+\_\+response\+\_\+from\+\_\+api@{get\+\_\+response\+\_\+from\+\_\+api}}
+\index{get\+\_\+response\+\_\+from\+\_\+api@{get\+\_\+response\+\_\+from\+\_\+api}!data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}}
+\subsubsection{\texorpdfstring{get\+\_\+response\+\_\+from\+\_\+api()}{get\_response\_from\_api()}}
+{\footnotesize\ttfamily def data\+\_\+mine.\+Mine\+Stock\+Prices.\+Mine\+Stock\+Prices.\+get\+\_\+response\+\_\+from\+\_\+api (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{function,  }\item[{}]{search\+\_\+term,  }\item[{}]{datatype = {\ttfamily \char`\"{}json\char`\"{}},  }\item[{}]{interval = {\ttfamily None} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}    Helper method to return json objects of ticker symbol from API
+    function: table/database name defined by alphavantage.co
+    search_term: ticker symbol to search for stock prices
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a98f05c73f0e1d30d16d42eb7510d60de}\label{classdata__mine_1_1_mine_stock_prices_1_1_mine_stock_prices_a98f05c73f0e1d30d16d42eb7510d60de}} 
+\index{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}!get\+\_\+weekly\+\_\+stocks@{get\+\_\+weekly\+\_\+stocks}}
+\index{get\+\_\+weekly\+\_\+stocks@{get\+\_\+weekly\+\_\+stocks}!data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices@{data\+\_\+mine\+::\+Mine\+Stock\+Prices\+::\+Mine\+Stock\+Prices}}
+\subsubsection{\texorpdfstring{get\+\_\+weekly\+\_\+stocks()}{get\_weekly\_stocks()}}
+{\footnotesize\ttfamily def data\+\_\+mine.\+Mine\+Stock\+Prices.\+Mine\+Stock\+Prices.\+get\+\_\+weekly\+\_\+stocks (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{search\+\_\+term,  }\item[{}]{datatype }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}    Get stock prices of a company weekly.
+    Default number of entries returned is latest 100 data points.
+    Default return format is JSON.
+    search_term: ticker symbol to search for stock prices
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+backend/data\+\_\+mine/Mine\+Stock\+Prices.\+py\end{DoxyCompactItemize}
