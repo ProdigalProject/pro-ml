@@ -19,7 +19,7 @@ class Predictor:
         Gets history data of given ticker from API and returns them in
         JSON file object.
         :param ticker_symbol: Ticker to get data
-        :return: JSON file object of history of given ticker
+        :return: list of JSON objects of history of given ticker
         """
         s_data = Stock.objects.filter(ticker=ticker_symbol).order_by('-date')
         json_file = []
@@ -77,29 +77,25 @@ class Predictor:
             i = str(float(round(i, 2)))
             return i
 
-
-def return_prediction(ticker_symbol):
-    """
-    Runs prediction model on given ticker 5 times recursively, and return
-    prediction results for next 5 days.
-    :param ticker_symbol: Ticker to run experiment on
-    :return: List of prediction results.
-    """
-    p = Predictor()
-    json_file = p.get_json(ticker_symbol)
-    p.create_csv(json_file)
-    csv_file = 'json_data.csv'
-    predictions = []
-
-    with open(csv_file, newline='') as f:
-        reader_r = csv.reader(f, delimiter=',')
-        next(reader_r)
-        for index, line in enumerate(reader_r):
-            expr_result = float(p.predict_closing(float(line[1]),
-                                                  float(line[2]),
-                                                  float(line[3])))
-            predictions.insert(index, expr_result)
-            if index >= 4:
-                break
-
-    return predictions
+    def return_prediction(self, ticker_symbol):
+        """
+        Runs prediction model on given ticker 5 times recursively, and return
+        prediction results for next 5 days.
+        :param ticker_symbol: Ticker to run experiment on
+        :return: List of prediction results.
+        """
+        json_file = self.get_json(ticker_symbol)
+        self.create_csv(json_file)
+        csv_file = 'json_data.csv'
+        predictions = []
+        with open(csv_file, newline='') as f:
+            reader_r = csv.reader(f, delimiter=',')
+            next(reader_r)
+            for index, line in enumerate(reader_r):
+                expr_result = float(self.predict_closing(float(line[1]),
+                                                         float(line[2]),
+                                                         float(line[3])))
+                predictions.insert(index, expr_result)
+                if index >= 4:
+                    break
+        return predictions
