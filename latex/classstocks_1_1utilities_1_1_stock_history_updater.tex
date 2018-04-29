@@ -1,0 +1,50 @@
+\hypertarget{classstocks_1_1utilities_1_1_stock_history_updater}{}\section{stocks.\+utilities.\+Stock\+History\+Updater Class Reference}
+\label{classstocks_1_1utilities_1_1_stock_history_updater}\index{stocks.\+utilities.\+Stock\+History\+Updater@{stocks.\+utilities.\+Stock\+History\+Updater}}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classstocks_1_1utilities_1_1_stock_history_updater_aa943ba0956fc5af74f69a32416d4246f}{update\+\_\+by\+\_\+ticker}} (ticker)
+\item 
+def \mbox{\hyperlink{classstocks_1_1utilities_1_1_stock_history_updater_ac26ce6122903a501fbc6144fe9808fed}{update\+\_\+all}} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Utility class to manage updates of history data on database.
+Update on stock history should occur daily,
+ideally after market closes.
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classstocks_1_1utilities_1_1_stock_history_updater_ac26ce6122903a501fbc6144fe9808fed}\label{classstocks_1_1utilities_1_1_stock_history_updater_ac26ce6122903a501fbc6144fe9808fed}} 
+\index{stocks\+::utilities\+::\+Stock\+History\+Updater@{stocks\+::utilities\+::\+Stock\+History\+Updater}!update\+\_\+all@{update\+\_\+all}}
+\index{update\+\_\+all@{update\+\_\+all}!stocks\+::utilities\+::\+Stock\+History\+Updater@{stocks\+::utilities\+::\+Stock\+History\+Updater}}
+\subsubsection{\texorpdfstring{update\+\_\+all()}{update\_all()}}
+{\footnotesize\ttfamily def stocks.\+utilities.\+Stock\+History\+Updater.\+update\+\_\+all (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyVerb}Updates stock data for all companies in database using
+Stock.update_by_ticker function.
+:return: Operation result of update on each ticker
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classstocks_1_1utilities_1_1_stock_history_updater_aa943ba0956fc5af74f69a32416d4246f}\label{classstocks_1_1utilities_1_1_stock_history_updater_aa943ba0956fc5af74f69a32416d4246f}} 
+\index{stocks\+::utilities\+::\+Stock\+History\+Updater@{stocks\+::utilities\+::\+Stock\+History\+Updater}!update\+\_\+by\+\_\+ticker@{update\+\_\+by\+\_\+ticker}}
+\index{update\+\_\+by\+\_\+ticker@{update\+\_\+by\+\_\+ticker}!stocks\+::utilities\+::\+Stock\+History\+Updater@{stocks\+::utilities\+::\+Stock\+History\+Updater}}
+\subsubsection{\texorpdfstring{update\+\_\+by\+\_\+ticker()}{update\_by\_ticker()}}
+{\footnotesize\ttfamily def stocks.\+utilities.\+Stock\+History\+Updater.\+update\+\_\+by\+\_\+ticker (\begin{DoxyParamCaption}\item[{}]{ticker }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyVerb}Get recent stock data of given ticker from AlphaVantage API and POSTs
+latest data to database, then DELETEs oldest data from database.
+Fails if company doesn't exist in database or record for current
+date exists.
+:param ticker: Ticker symbol to update data
+:return: 0: success
+ 1: record already exists
+ 2: company not found in database
+ -1: undefined error
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+backend/stocks/utilities.\+py\end{DoxyCompactItemize}
