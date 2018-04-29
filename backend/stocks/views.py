@@ -12,11 +12,21 @@ global_key = 'cHJvZGlnYWxfYXBwX2FwaV9rZXk='
 
 
 class StockList(generics.ListCreateAPIView):
+    """
+    This class create view of all stock data in database, ordered by date.
+    """
     serializer_class = StockSerializer
     filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
 
     def get_queryset(self):
+        """
+        Override to check api key before getting queryset. Raises exception
+        if api key is not found in url parameters.
+        :return: AuthenticationFailed if no api key is provided,
+                 otherwise queryset of all stock data in database
+        """
+        # check api key
         key_query = self.request.query_params.get('apikey')
         if key_query is None:
             raise AuthenticationFailed
@@ -26,25 +36,34 @@ class StockList(generics.ListCreateAPIView):
 
 
 class StockDetail(generics.ListAPIView):
+    """
+    This class creates view of one company's stock data, ordered by date.
+    """
     serializer_class = StockSerializer
     filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
-    api = "http://127.0.0.1:8000/stocks/"
 
     def get_queryset(self):
+        """
+        Override to check api key before getting queryset. Raises exception
+        if api key is not found in url parameters.
+        :return: AuthenticationFailed if no api key is provided,
+                 Http404 if company is invalid,
+                 otherwise queryset of data of one company.
+        """
+        # check api key
         key_query = self.request.query_params.get('apikey')
         if key_query is None:
             raise AuthenticationFailed
         elif key_query != global_key:
             raise AuthenticationFailed
         queryset = Stock.objects.filter(ticker=self.kwargs['ticker'])
-        if queryset:
+        if queryset:  # data exists in database
             return queryset
-        else:
+        else:  # data doesn't exist in database
             ticker = self.kwargs['ticker']
             alpha = AlphaAPICaller()
             json_data = alpha.get_compact_date(ticker)
-
             if len(json_data) > 0:
                 cur = connection.cursor()
                 query = """INSERT INTO stocks_stock(ticker, high, low,\
