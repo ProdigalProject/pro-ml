@@ -1,6 +1,6 @@
 import requests
 from stocks.models import Stock
-import stocks.linear_regression as predictor
+import stocks.linear_regression as linregpkg
 
 
 class AlphaAPICaller:
@@ -129,7 +129,8 @@ class ExperimentManager:
         """
         if not Stock.objects.filter(ticker=ticker).exists():
             return -1
-        expr_result = predictor.return_prediction(ticker)
+        engine = linregpkg.Predictor()
+        expr_result = engine.return_prediction(ticker)
         results = []
         for index in range(1, 6):
             api_data = dict()

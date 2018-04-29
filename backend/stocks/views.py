@@ -29,7 +29,6 @@ class StockDetail(generics.ListAPIView):
     serializer_class = StockSerializer
     filter_backends = (OrderingFilter,)
     ordering_fields = ('date',)
-    api = "http://127.0.0.1:8000/stocks/"
 
     def get_queryset(self):
         key_query = self.request.query_params.get('apikey')
