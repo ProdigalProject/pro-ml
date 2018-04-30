@@ -33,8 +33,8 @@ https://prodigal-beta.azurewebsites.net
 
 ## Docker Deployment Instructions
 1. Run Docker container.
-2. Run ```docker pull hwin16/prodigal-ml:v1.0.6```
-3. Run ```docker run -p 8000:8000 hwin16/prodigal-ml:v1.0.6```
+2. Run ```docker pull hwin16/prodigal-ml:v1.0.7```
+3. Run ```docker run -p 8000:8000 hwin16/prodigal-ml:v1.0.7```
 
 ## Documentations
 [Documentation pdf](prodigal_documentation.pdf)
